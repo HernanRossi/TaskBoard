@@ -71,7 +71,7 @@ export const NewItemButton = styled.button`
   padding: 6px 12px;
   text-align: center;
 `
-export const NewItemInput = styled.div`
+export const NewItemInput = styled.input`
   border-radius: 3px;
   border: none;
   box-shadow: #091e4240 0px 1px 0px 0px;
