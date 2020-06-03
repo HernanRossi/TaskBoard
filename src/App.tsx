@@ -2,20 +2,20 @@ import React from 'react';
 import './styles/App.css';
 import { Card, Column, AddNewItem } from './components'
 import { AppContainer } from './styles/styles'
+import { useAppState } from './context';
 
 function App() {
+
+  const { state, dispatch } = useAppState()
+
   return (
     <AppContainer>
-      <Column text="To Do">
-        <Card text="Generate app scaffold" />
-      </Column>
-      <Column text="In Progress">
-        <Card text="Learn Typescript" />
-      </Column>
-      <Column text="Done">
-        <Card text="Begin to use static typing" />
-      </Column>
-      <AddNewItem toggleButtonText="+Add another list" onAdd={console.log} />
+      {state.lists.map((list, i) => (
+        <Column id={list.id} text={list.text} key={list.id} index={i} />
+      ))}
+      <AddNewItem
+        toggleButtonText="+Add another list"
+        onAdd={text => dispatch({ type: "ADD_LIST", payload: text })} />
     </AppContainer>
   );
 }
