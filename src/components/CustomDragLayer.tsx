@@ -12,7 +12,7 @@ export const CustomDragLayer: React.FC = (props) => {
 
   return isDragging ? (
     <CustomDragLayerContainer>
-      <div style={getItemStyles(currentOffset)}>
+      <div style={getItemStyles(currentOffset, isDragging)}>
         <Column
           id={item.id}
           text={item.text}
@@ -24,7 +24,7 @@ export const CustomDragLayer: React.FC = (props) => {
   ) : null
 }
 
-function getItemStyles(currentOffset: XYCoord | null): React.CSSProperties {
+function getItemStyles(currentOffset: XYCoord | null, isDragging: boolean): React.CSSProperties {
   if (!currentOffset) {
     return {
       display: "none"
@@ -36,6 +36,6 @@ function getItemStyles(currentOffset: XYCoord | null): React.CSSProperties {
   const transform = `translate(${x}px, ${y}px)`
   return {
     transform,
-    WebkitTransform: transform
+    WebkitTransform: transform,
   }
 }
