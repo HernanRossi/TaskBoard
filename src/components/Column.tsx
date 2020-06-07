@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef } from 'react'
 import { useDrop } from 'react-dnd'
 import { ColumnContainer, ColumnTitle } from '../styles/styles'
 import { AddNewItem } from './AddNewItem'
@@ -7,7 +7,6 @@ import { Card } from './Card'
 import { useItemDrag } from '../utils/useItemDrag'
 import { DragItem } from '../types/dragItem'
 import { isHidden } from '../utils/isHidden'
-import { getEmptyImage } from 'react-dnd-html5-backend'
 
 interface ColumnProps {
   text: string
@@ -20,28 +19,43 @@ export const Column = ({ text, index, id, isPreview }: ColumnProps) => {
 
   const { state, dispatch } = useAppState()
   const ref = useRef<HTMLDivElement>(null)
-  const { drag, preview } = useItemDrag({ type: "COLUMN", id, index, text })
+  const { drag } = useItemDrag({ type: "COLUMN", id, index, text })
   const [, drop] = useDrop({
-    accept: "COLUMN",
+    accept: ["COLUMN", "CARD"],
     hover(item: DragItem) {
-      const dragIndex = item.index
-      const hoverIndex = index
+      if (item.type === "COLUMN") {
+        const dragIndex = item.index
+        const hoverIndex = index
 
-      if (dragIndex === hoverIndex) return
+        if (dragIndex === hoverIndex) return
 
-      dispatch({ type: "MOVE_LIST", payload: { dragIndex, hoverIndex } })
-      item.index = hoverIndex
+        dispatch({ type: "MOVE_LIST", payload: { dragIndex, hoverIndex } })
+        item.index = hoverIndex
+      } else {
+        const dragIndex = item.index
+        const hoverIndex = 0
+        const sourceColumn = item.columnId
+        const targetColumn = id
+
+        dispatch({
+          type: "MOVE_TASK",
+          payload: { dragIndex, hoverIndex, sourceColumn, targetColumn }
+        })
+        item.index = hoverIndex
+        item.columnId = targetColumn
+      }
+
     }
   })
-
-  useEffect(() => {
-    if (preview) preview(getEmptyImage(), { captureDraggingState: true })
-  }, [preview])
 
   drag(drop(ref))
 
   return (
-    <ColumnContainer ref={ref} isHidden={isHidden(state.draggedItem, "COLUMN", id, isPreview)} isPreview={isPreview}>
+    <ColumnContainer
+      ref={ref}
+      isHidden={isHidden(state.draggedItem, "COLUMN", id, isPreview)}
+      isPreview={isPreview}
+    >
       <ColumnTitle>{text}</ColumnTitle>
       {state.lists[index].tasks.map((task, i) => (
         <Card text={task.text} key={task.id} id={task.id} columnId={id} index={i} />

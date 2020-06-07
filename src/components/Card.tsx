@@ -4,6 +4,7 @@ import { CardContainer } from '../styles/styles'
 import { CardDragItem } from '../types/dragItem'
 import { useAppState } from '../context'
 import { useItemDrag } from '../utils/useItemDrag'
+import { isHidden } from '../utils/isHidden'
 
 
 interface CardProps {
@@ -11,12 +12,14 @@ interface CardProps {
   id: string
   index: number
   columnId: string
+  isPreview?: boolean
 }
 
-export const Card = ({ text, id, index, columnId }: CardProps) => {
+export const Card = ({ text, id, index, columnId, isPreview }: CardProps) => {
   const ref = useRef<HTMLDivElement>(null)
+  const { state, dispatch } = useAppState()
+  const { drag } = useItemDrag({ type: "CARD", id, index, text, columnId })
 
-  const { dispatch } = useAppState()
   const [, drop] = useDrop({
     accept: 'CARD',
     hover(item: CardDragItem) {
@@ -36,9 +39,13 @@ export const Card = ({ text, id, index, columnId }: CardProps) => {
       item.columnId = targetColumn
     }
   })
-  const { drag } = useItemDrag({ type: "CARD", id, index, text, columnId })
-
 
   drag(drop(ref))
-  return <CardContainer>{text}</CardContainer>
+  return <CardContainer
+    isHidden={isHidden(state.draggedItem, "CARD", id, isPreview)}
+    isPreview={isPreview}
+    ref={ref}
+  >
+    {text}
+  </CardContainer>
 }

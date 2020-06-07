@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const AppContainer = styled.div`
   align-items: flex-start;
-  background-color: #3179ba;
+  background-color: #ffffff;
   display: flex;
   flex-direction: row;
   height: 100%;
@@ -35,7 +35,7 @@ export const ColumnTitle = styled.div`
   font-weight: bold;
 `
 
-export const CardContainer = styled.div`
+export const CardContainer = styled(DragPreviewContainer)`
   background-color: #fff;
   cursor: pointer;
   margin-bottom: 0.5rem;
@@ -53,7 +53,7 @@ export const AddItemButton = styled.button<AddItemButtonProps>`
   background-color: #ffffff3d;
   border-radius: 3px;
   border: none;
-  color: ${props => (props.dark ? "#000" : "#fff")};
+  color: ${props => (props.dark ? "#ff6500" : "#ff6500")};
   cursor: pointer;
   max-width: 300px;
   text-align: left;

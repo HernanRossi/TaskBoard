@@ -1,4 +1,7 @@
 import React, { useState } from 'react'
+import ArrowRightIcon from '@material-ui/icons/ArrowRight'
+import { TextField, InputAdornment } from '@material-ui/core'
+
 import { NewItemFormContainer, NewItemButton, NewItemInput } from '../styles/styles'
 import { useFocus } from '../utils'
 interface NewItemFormProps {
@@ -12,12 +15,25 @@ export const NewItemForm = (props: NewItemFormProps) => {
 
   return (
     <NewItemFormContainer>
-      <NewItemInput 
+      <TextField
+        id="new-item"
+        label="Add New Item"
+        variant="filled"
+        color="secondary"
+        size="small"
         ref={inputRef}
         value={text}
         onChange={e => setText(e.target.value)}
+        onSubmit={() => onAdd(text)}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <ArrowRightIcon />
+            </InputAdornment>
+          ),
+        }}
       />
-      <NewItemButton onClick={()=> onAdd(text)}>
+      <NewItemButton onClick={() => onAdd(text)}>
         Create
       </NewItemButton>
     </NewItemFormContainer>
