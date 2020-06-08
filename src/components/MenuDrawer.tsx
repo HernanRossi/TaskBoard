@@ -1,11 +1,45 @@
 import React from 'react';
 import { useStyles } from "../styles/material-ui-styles"
 import { makeStyles } from '@material-ui/core/styles'
-import { CssBaseline, AppBar, Toolbar, Drawer, Typography, Divider, List, ListItem, ListItemText, ListItemIcon } from "@material-ui/core";
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import { CssBaseline, AppBar, Toolbar, Drawer, Typography, Divider, List, ListItem, ListItemText, ListItemIcon, SvgIconTypeMap, SvgIcon } from "@material-ui/core"
+import AmpStoriesIcon from '@material-ui/icons/AmpStories'
+import GitHubIcon from '@material-ui/icons/GitHub'
+import LinkedInIcon from '@material-ui/icons/LinkedIn'
+import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer'
+import InfoIcon from '@material-ui/icons/Info'
 
-export const PermanentDrawerLeft = () => {
+type IconMapping = {
+  scrum_board: JSX.Element
+  about: JSX.Element
+  contact: JSX.Element
+  github: JSX.Element
+  linkedin: JSX.Element
+}
+
+const iconMapping: IconMapping = {
+  scrum_board: <AmpStoriesIcon/>,
+  about: <InfoIcon/>,
+  contact: <QuestionAnswerIcon/>,
+  github: <GitHubIcon/>,
+  linkedin: <LinkedInIcon/>,
+}
+
+type SectionLabels = {
+  scrum_board: string
+  about: string
+  contact: string
+  github: string
+  linkedin: string
+}
+
+const sectionLabels: SectionLabels = {
+  scrum_board: 'Scrum Board',
+  about: 'About',
+  contact: 'Contact',
+  github: 'GitHub',
+  linkedin: 'LinkedIn'
+}
+export const PermanentDrawerLeft = ({ children }: React.PropsWithChildren<{}>) => {
   const classes: any = useStyles();
 
   return (
@@ -14,7 +48,7 @@ export const PermanentDrawerLeft = () => {
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" noWrap>
-            Permanent drawer
+            Hernan Francisco Rossi
           </Typography>
         </Toolbar>
       </AppBar>
@@ -29,30 +63,29 @@ export const PermanentDrawerLeft = () => {
         <div className={classes.toolbar} />
         <Divider />
         <List>
-          {['Scrum Board', 'About', 'Contact', 'Github', 'LinkedIn'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
+          {['scrum_board'].map((label, index) => (
+            <ListItem button key={label}>
+              <ListItemIcon>{iconMapping[label as keyof IconMapping]}</ListItemIcon>
+              <ListItemText primary={sectionLabels[label as keyof SectionLabels]} />
             </ListItem>
           ))}
         </List>
         <Divider />
         <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
+          {['about', 'contact', 'github', 'linkedin'].map((label, index) => (
+            <ListItem button key={label}>
+               <ListItemIcon>{iconMapping[label as keyof IconMapping]}</ListItemIcon>
+              <ListItemText primary={sectionLabels[label as keyof SectionLabels]} />
             </ListItem>
           ))}
         </List>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-
-        </main>
+        {children}
+      </main>
     </div>
   )
 }
 
-      
-      
+
