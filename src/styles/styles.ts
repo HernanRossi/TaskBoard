@@ -1,12 +1,14 @@
 import styled from 'styled-components'
 export const AppContainer = styled.div`
-  align-items: flex-start;
-  background-color: #ffffff;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fffff;
   flex-direction: row;
   height: 100%;
-  padding: 20px;
   width: 100%;
+  padding: 20px;
+  border-radius: 10px;
 `
 
 interface DragPreviewContainerProps {
@@ -20,22 +22,26 @@ export const DragPreviewContainer = styled.div<DragPreviewContainerProps>`
 `
 
 export const ColumnContainer = styled(DragPreviewContainer)`
-  background-color: #ebecf0;
+  background-color: #FFFFFF;
   width: 300px;
-  min-height:40px;
+  min-height:300px;
   margin-right: 20px;
-  border-radius: 3px;
+  border-radius: 10px;
   padding: 8px 8px;
   flex-grow: 0;
+  height: 100%;
+  border: 0.2px solid black;
 `
 
 export const ColumnTitle = styled.div`
-  padding: 6px 16px 12px;
-  font-weight: bold;
+  padding: 6px 12px 2px;
+  font-weight: 400;
+  font-size: 19px;
+  text-align: center;
 `
 
 export const CardContainer = styled(DragPreviewContainer)`
-  background-color: #fff;
+  background-color: #FFEEE6;
   cursor: pointer;
   margin-bottom: 0.5rem;
   padding: 0.5rem 1rem;
@@ -43,43 +49,13 @@ export const CardContainer = styled(DragPreviewContainer)`
   border-radius: 3px;
   box-shadow: #091e4240 0px 1px 0px 0px;
 `
-
-interface AddItemButtonProps {
-  dark?: boolean
-}
-
-export const AddItemButton = styled.button<AddItemButtonProps>`
-  background-color: #ffffff3d;
-  border-radius: 3px;
-  border: none;
-  color: ${props => (props.dark ? "#ff6500" : "#ff6500")};
-  cursor: pointer;
-  max-width: 300px;
-  text-align: left;
-  transition: background 85ms ease-in;
-  width: 100%;
-  &:hover {
-    background-color: #ffffff52;
-  }
-`
-
 export const NewItemFormContainer = styled.div`
   max-width: 300px;
   display: flex;
   flex-direction: column;
-  width: 100%;
   align-items: flex-start;
 `
 
-export const NewItemButton = styled.button`
-  background-color: #5aac44;
-  border-radius: 3px;
-  border: none;
-  box-shadow: none;
-  color: #fff;
-  padding: 6px 12px;
-  text-align: center;
-`
 export const NewItemInput = styled.input`
   border-radius: 3px;
   border: none;
@@ -97,4 +73,21 @@ export const CustomDragLayerContainer = styled.div`
   top: 0;
   width: 100%;
   z-index: 100;
+`
+
+export const DividerLine = styled.hr`
+  display: block;
+  position: relative;
+  padding: 0;
+  margin: 3px auto;
+  height: 0;
+  width: 90%;
+  max-height: 0;
+  font-size: 1px;
+  line-height: 0;
+  clear: both;
+  border: none;
+  border-bottom: 1px solid #df691a;
+  margin-bottom: 20px;
+  margin-top: 0px;
 `

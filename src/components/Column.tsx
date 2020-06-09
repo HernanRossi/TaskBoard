@@ -1,12 +1,13 @@
 import React, { useRef } from 'react'
 import { useDrop } from 'react-dnd'
-import { ColumnContainer, ColumnTitle } from '../styles/styles'
+import { ColumnContainer, ColumnTitle, DividerLine } from '../styles/styles'
 import { AddNewItem } from './AddNewItem'
 import { useAppState } from '../context'
 import { Card } from './Card'
 import { useItemDrag } from '../utils/useItemDrag'
 import { DragItem } from '../types/dragItem'
 import { isHidden } from '../utils/isHidden'
+import { Divider } from '@material-ui/core'
 
 interface ColumnProps {
   text: string
@@ -57,10 +58,11 @@ export const Column = ({ text, index, id, isPreview }: ColumnProps) => {
       isPreview={isPreview}
     >
       <ColumnTitle>{text}</ColumnTitle>
+      <DividerLine/>
       {state.lists[index].tasks.map((task, i) => (
         <Card text={task.text} key={task.id} id={task.id} columnId={id} index={i} />
       ))}
-      <AddNewItem toggleButtonText="+ Add another task"
+      <AddNewItem toggleButtonText="New Task"
         onAdd={text => dispatch({ type: "ADD_TASK", payload: { text, taskId: id } })}
         dark />
     </ColumnContainer>

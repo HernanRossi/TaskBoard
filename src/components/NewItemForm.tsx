@@ -1,41 +1,48 @@
 import React, { useState } from 'react'
 import ArrowRightIcon from '@material-ui/icons/ArrowRight'
-import { TextField, InputAdornment } from '@material-ui/core'
-
-import { NewItemFormContainer, NewItemButton, NewItemInput } from '../styles/styles'
+import { TextField, InputAdornment, Button, ButtonGroup, makeStyles } from '@material-ui/core'
+import Box from '@material-ui/core/Box';
+import { NewItemFormContainer } from '../styles/styles'
 import { useFocus } from '../utils'
 interface NewItemFormProps {
   onAdd(text: string): void
+  classes?: { input: string, root: string }
+  closeShowForm: () => void
+  type?: string
 }
 
 export const NewItemForm = (props: NewItemFormProps) => {
-  const { onAdd } = props
+  const { onAdd, closeShowForm, type } = props
   const [text, setText] = useState("")
   const inputRef = useFocus()
+
+  const inputProps = {
+    startAdornment: (
+      <InputAdornment position="start" style={{ color: '#df691a' }}>
+        <ArrowRightIcon />
+      </InputAdornment>
+    ),
+    autoFocus: true,
+    placeholder: type ? 'List Title' : 'Task Title'
+  }
 
   return (
     <NewItemFormContainer>
       <TextField
         id="new-item"
-        label="Add New Item"
-        variant="filled"
-        color="secondary"
+        style={{ marginTop: '10px', color: '#ffffff' }}
+        autoComplete='off'
+        type='text'
         size="small"
         ref={inputRef}
         value={text}
         onChange={e => setText(e.target.value)}
-        onSubmit={() => onAdd(text)}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <ArrowRightIcon />
-            </InputAdornment>
-          ),
-        }}
+        InputProps={inputProps}
       />
-      <NewItemButton onClick={() => onAdd(text)}>
-        Create
-      </NewItemButton>
+      <ButtonGroup variant="text" color='primary'>
+        <Button style={{ marginTop: '10px', color: type ? '#ffffff' : '#000000', textTransform: 'none' }} onClick={() => onAdd(text)}>Create</Button>
+        <Button style={{ marginTop: '10px', color: '#df691a', textTransform: 'none' }} onClick={() => closeShowForm()}>Cancel</Button>
+      </ButtonGroup>
     </NewItemFormContainer>
   )
 }

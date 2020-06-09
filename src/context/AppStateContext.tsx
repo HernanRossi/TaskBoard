@@ -9,17 +9,22 @@ const appData: AppState = {
     {
       id: "0",
       text: "To Do",
-      tasks: [{ id: "c0", text: "Generate app scaffold" }]
+      tasks: [{ id: "c0", text: "Click on a List and move it around." }, { id: "c1", text: "Click on a Task and move it around." }]
     },
     {
       id: "1",
       text: "In Progress",
-      tasks: [{ id: "c2", text: "Learn TypeScript" }]
+      tasks: [{ id: "c2", text: "This app is created using TypeScript and React." }]
     },
     {
       id: "2",
+      text: "Review",
+      tasks: [{ id: "c3", text: "Try adding a new Task." }, { id: "c4", text: "Try adding a new List." }]
+    },
+    {
+      id: "3",
       text: "Done",
-      tasks: [{ id: "c3", text: "Begin to use static typing" }]
+      tasks: [{ id: "c5", text: "Try to Delete a Task" }, { id: "c6", text: "Try to Delete a column" }]
     }
   ],
   draggedItem: undefined
@@ -28,7 +33,7 @@ const appData: AppState = {
 const appStateReducer = (state: AppState, action: Action): AppState => {
   switch (action.type) {
     case "ADD_LIST": {
-
+      if (action.payload.length < 1) return { ...state, lists: [...state.lists] }
       return {
         ...state,
         lists: [
@@ -38,6 +43,7 @@ const appStateReducer = (state: AppState, action: Action): AppState => {
       }
     }
     case "ADD_TASK": {
+      if (action.payload.text.length < 1) return { ...state }
       const targetLaneIndex = findItemIndexById(
         state.lists,
         action.payload.taskId
@@ -60,7 +66,7 @@ const appStateReducer = (state: AppState, action: Action): AppState => {
         dragIndex,
         hoverIndex,
         sourceColumn,
-        targetColumn 
+        targetColumn
       } = action.payload
       const sourceLaneIndex = findItemIndexById(state.lists, sourceColumn)
       const targetLaneIndex = findItemIndexById(state.lists, targetColumn)

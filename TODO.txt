@@ -1,0 +1,7 @@
+- Use tasks interface to create task class and create new task instances for all created tasks and pass those objects around
+- Implement material-ui cards for the Tasks display in lists
+- Implement Modals and cards for displaying details of the tasks and editing saving more details
+- Add features to delete tasks and lists
+- Add database support using express backend using mongodb and grahQL
+- Work on updating the styling still does not look great
+- Fix bug where too many tasks will stretch off screen, need to add a container which expands and is scrollable within the main window
