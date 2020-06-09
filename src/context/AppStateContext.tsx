@@ -1,33 +1,14 @@
 import React, { createContext, useReducer, useContext } from "react"
 import { v4 as uuid } from 'uuid'
 import { findItemIndexById, moveItem } from "../utils"
-import { AppState } from '../interfaces/contextInterfaces'
-import { Action } from '../types/appContextTypes'
+import { AppState } from '../models/interfaces/contextInterfaces'
+import { Action } from '../models/types/appContextTypes'
+import { defaultLists } from "../models/mock-data/defaultTasks"
+import { Task } from "../models/classes/TaskClass"
 
 const appData: AppState = {
-  lists: [
-    {
-      id: "0",
-      text: "To Do",
-      tasks: [{ id: "c0", text: "Click on a List and move it around." }, { id: "c1", text: "Click on a Task and move it around." }]
-    },
-    {
-      id: "1",
-      text: "In Progress",
-      tasks: [{ id: "c2", text: "This app is created using TypeScript and React." }]
-    },
-    {
-      id: "2",
-      text: "Review",
-      tasks: [{ id: "c3", text: "Try adding a new Task." }, { id: "c4", text: "Try adding a new List." }]
-    },
-    {
-      id: "3",
-      text: "Done",
-      tasks: [{ id: "c5", text: "Try to Delete a Task" }, { id: "c6", text: "Try to Delete a column" }]
-    }
-  ],
-  draggedItem: undefined
+  lists: defaultLists,
+  draggedItem: undefined,
 }
 
 const appStateReducer = (state: AppState, action: Action): AppState => {
@@ -38,7 +19,7 @@ const appStateReducer = (state: AppState, action: Action): AppState => {
         ...state,
         lists: [
           ...state.lists,
-          { id: uuid(), text: action.payload, tasks: [] }
+          { listId: uuid(), title: action.payload, tasks: [] }
         ]
       }
     }
@@ -46,12 +27,16 @@ const appStateReducer = (state: AppState, action: Action): AppState => {
       if (action.payload.text.length < 1) return { ...state }
       const targetLaneIndex = findItemIndexById(
         state.lists,
-        action.payload.taskId
+        action.payload.listId
       )
-      state.lists[targetLaneIndex].tasks.push({
-        id: uuid(),
-        text: action.payload.text
-      })
+      state.lists[targetLaneIndex].tasks.push(
+        new Task({
+          listId: action.payload.listId,
+          taskIndex: state.lists[targetLaneIndex].tasks.length,
+          taskId: uuid(),
+          title: action.payload.text,
+        }),
+      )
       return {
         ...state
       }
@@ -65,11 +50,11 @@ const appStateReducer = (state: AppState, action: Action): AppState => {
       const {
         dragIndex,
         hoverIndex,
-        sourceColumn,
-        targetColumn
+        sourceListId,
+        targetListId
       } = action.payload
-      const sourceLaneIndex = findItemIndexById(state.lists, sourceColumn)
-      const targetLaneIndex = findItemIndexById(state.lists, targetColumn)
+      const sourceLaneIndex = findItemIndexById(state.lists, sourceListId)
+      const targetLaneIndex = findItemIndexById(state.lists, targetListId)
       const item = state.lists[sourceLaneIndex].tasks.splice(dragIndex, 1)[0]
       state.lists[targetLaneIndex].tasks.splice(hoverIndex, 0, item)
       return { ...state }

@@ -1,21 +1,22 @@
 
-import React from 'react';
+import React, { useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { Task } from '../models/task';
+import { TaskInterface } from '../models/interfaces/taskInterface';
+import { useAppState } from '../context';
+import { useItemDrag } from '../utils/useItemDrag';
+import { useDrop } from 'react-dnd';
+import { CardDragItem } from '../models/types/dragItem';
+import { CardContainer } from '../styles/styles';
+import { isHidden } from '../utils/isHidden';
+import IconButton from '@material-ui/core/IconButton';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,42 +41,70 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-type TaskCard = {
-  task: Task
+type CardProps = {
+  task: TaskInterface
+  taskHoverIndex: number
+  listHoverId: string
+  onDelete?: () => void
+  isPreview?: boolean
 }
 
-export default function TaskDisplayCard(props: TaskCard) {
-  const { task } = props
+export const StyledCard = ({ task, isPreview, onDelete, taskHoverIndex, listHoverId }: CardProps) => {
+  const { taskId, listId, taskIndex, title } = task
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
+   const ref = useRef<HTMLDivElement>(null)
+  const { state, dispatch } = useAppState()
+  const { drag } = useItemDrag({ type: "CARD", taskId, taskIndex, listId })
+
+  const [, drop] = useDrop({
+    accept: 'CARD',
+    hover(item: CardDragItem) {
+      if (item.taskId === taskId) {
+        return
+      }
+      const dragIndex = item.taskIndex
+      const hoverIndex = taskIndex
+      const sourceListId = item.listId
+      const targetListId = listHoverId
+
+      dispatch({
+        type: "MOVE_TASK",
+        payload: { dragIndex, hoverIndex, sourceListId, targetListId }
+      })
+      item.taskIndex = hoverIndex
+      item.listId = targetListId
+    }
+  })
+
+  drag(drop(ref))
 
   return (
-    <Card className={classes.root}>
-      <CardHeader
-        avatar={
-          <Avatar aria-label="task" className={classes.avatar}>
-            {task.typeLetter}
-          </Avatar>
-        }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title="Task default data"
-        subheader=" Created: September 14, 2016"
-      />
-
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          {task.description}
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="delete task">
-          <DeleteForeverIcon />
-        </IconButton>
-      </CardActions >
-    </Card>
+    <CardContainer
+      isHidden={isHidden(state.draggedItem, "CARD", taskId, isPreview)}
+      isPreview={isPreview}
+      ref={ref}
+    >
+      <Card className={classes.root}>
+        <CardHeader
+          avatar={
+            <Avatar aria-label="task" className={classes.avatar}>
+              {task.typeLetter}
+            </Avatar>
+          }
+          action={
+            <IconButton aria-label="settings">
+              <MoreVertIcon />
+            </IconButton>
+          }
+          title={task.title}
+          subheader={`Created: ${task.created?.toLocaleDateString("en-US")}`}
+        />
+        <CardContent>
+          <Typography variant="body2" color="textSecondary" component="p">
+            {task.description}
+          </Typography>
+        </CardContent>
+      </Card>
+    </CardContainer>
   )
 }

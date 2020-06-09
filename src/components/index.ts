@@ -1,14 +1,14 @@
 import { AddNewItem } from './AddNewItem'
-import { Card } from './Card'
-import { Column } from './Column'
+import { StyledCard } from './StyledCard'
+import { List } from './List'
 import { NewItemForm } from './NewItemForm'
 import { CustomDragLayer } from './CustomDragLayer'
 import { PermanentDrawerLeft } from './MenuDrawer'
 
 export {
   AddNewItem,
-  Card,
-  Column,
+  StyledCard,
+  List,
   NewItemForm,
   CustomDragLayer,
   PermanentDrawerLeft

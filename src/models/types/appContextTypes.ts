@@ -9,7 +9,7 @@ export type Action =
   |
   {
     type: "ADD_TASK"
-    payload: { text: string, taskId: string }
+    payload: { text: string, listId: string }
   }
   |
   {
@@ -38,7 +38,7 @@ export type Action =
     payload: {
       dragIndex: number
       hoverIndex: number
-      sourceColumn: string
-      targetColumn: string
+      sourceListId: string
+      targetListId: string
     }
   }
