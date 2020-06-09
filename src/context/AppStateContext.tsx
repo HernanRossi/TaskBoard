@@ -32,6 +32,7 @@ const appStateReducer = (state: AppState, action: Action): AppState => {
       state.lists[targetLaneIndex].tasks.push(
         new Task({
           listId: action.payload.listId,
+          listIndex: targetLaneIndex,
           taskIndex: state.lists[targetLaneIndex].tasks.length,
           taskId: uuid(),
           title: action.payload.text,
@@ -50,13 +51,12 @@ const appStateReducer = (state: AppState, action: Action): AppState => {
       const {
         dragIndex,
         hoverIndex,
-        sourceListId,
-        targetListId
+        sourceListIndex,
+        targetListIndex
       } = action.payload
-      const sourceLaneIndex = findItemIndexById(state.lists, sourceListId)
-      const targetLaneIndex = findItemIndexById(state.lists, targetListId)
-      const item = state.lists[sourceLaneIndex].tasks.splice(dragIndex, 1)[0]
-      state.lists[targetLaneIndex].tasks.splice(hoverIndex, 0, item)
+
+      const item = state.lists[sourceListIndex].tasks.splice(dragIndex, 1)[0]
+      state.lists[targetListIndex].tasks.splice(hoverIndex, 0, item)
       return { ...state }
     }
     case "SET_DRAGGED_ITEM": {

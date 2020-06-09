@@ -10,10 +10,9 @@ export const CustomDragLayer: React.FC = (props) => {
     isDragging: monitor.isDragging(),
     currentOffset: monitor.getSourceClientOffset(),
   }))
-
   return isDragging ? (
     <CustomDragLayerContainer>
-      <div style={getItemStyles(currentOffset, isDragging)}>
+      <div style={getItemStyles(currentOffset)}>
         {item.type === "LIST" ? (
           <List
             listId={item.listId}
@@ -27,7 +26,7 @@ export const CustomDragLayer: React.FC = (props) => {
               taskHoverIndex={0}
               task={item.task}
               listHoverId={item.listHoverId}
-              
+              listIndex={item.listIndex}
             />
           )}
       </div>
@@ -35,7 +34,7 @@ export const CustomDragLayer: React.FC = (props) => {
   ) : null
 }
 
-function getItemStyles(currentOffset: XYCoord | null, isDragging: boolean): React.CSSProperties {
+function getItemStyles(currentOffset: XYCoord | null): React.CSSProperties {
   if (!currentOffset) {
     return {
       display: "none"

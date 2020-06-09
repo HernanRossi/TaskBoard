@@ -34,15 +34,16 @@ export const List = ({ title, listIndex, listId, isPreview }: ListProps) => {
       } else {
         const dragIndex = item.taskIndex
         const hoverIndex = 0
-        const sourceListId = item.listId
-        const targetListId = listId
+        const sourceListIndex = item.listIndex
+        const targetListIndex = listIndex
 
         dispatch({
           type: "MOVE_TASK",
-          payload: { dragIndex, hoverIndex, sourceListId, targetListId }
+          payload: { dragIndex, hoverIndex, sourceListIndex, targetListIndex }
         })
         item.taskIndex = hoverIndex
-        item.listId = targetListId
+        item.listIndex = targetListIndex
+        item.listId = listId
       }
     }
   })
@@ -58,12 +59,14 @@ export const List = ({ title, listIndex, listId, isPreview }: ListProps) => {
       <ColumnTitle>{title}</ColumnTitle>
       <DividerLine />
       {state.lists[listIndex].tasks.map((task, i) => (
-        <StyledCard 
-        task={task} 
-        onDelete={() => console.log('Delete task.')} 
-        taskHoverIndex={i}
-        isPreview={isPreview}
-        listHoverId={listId} />
+        <StyledCard
+          key={i}
+          task={task}
+          onDelete={() => console.log('Delete task.')}
+          taskHoverIndex={i}
+          isPreview={isPreview}
+          listHoverId={listId}
+          listIndex={listIndex} />
       ))}
       <AddNewItem toggleButtonText="New Task"
         onAdd={text => dispatch({ type: "ADD_TASK", payload: { text, listId } })}

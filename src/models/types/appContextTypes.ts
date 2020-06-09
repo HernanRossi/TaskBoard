@@ -38,7 +38,7 @@ export type Action =
     payload: {
       dragIndex: number
       hoverIndex: number
-      sourceListId: string
-      targetListId: string
+      sourceListIndex: number
+      targetListIndex: number
     }
   }

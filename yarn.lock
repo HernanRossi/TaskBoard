@@ -5275,6 +5275,11 @@ hmac-drbg@^1.0.0:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.1"
 
+hoist-non-react-statics@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-1.2.0.tgz#aa448cf0986d55cc40773b17174b7dd066cb7cfb"
+  integrity sha1-qkSM8JhtVcxAdzsXF0t90GbLfPs=
+
 hoist-non-react-statics@^3.0.0, hoist-non-react-statics@^3.3.0, hoist-non-react-statics@^3.3.2:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.3.2.tgz#ece0acaf71d62c2969c2ec59feff42a4b1a85b45"
@@ -6874,6 +6879,11 @@ lodash.templatesettings@^4.0.0:
   integrity sha512-stgLz+i3Aa9mZgnjr/O+v9ruKZsPsndy7qPZOchbqk2cnTU1ZaldKK+v7m54WoKIyxiuMZTKT2H81F8BeAc3ZQ==
   dependencies:
     lodash._reinterpolate "^3.0.0"
+
+lodash.throttle@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
+  integrity sha1-wj6RtxAkKscMN/HhzaknTMOb8vQ=
 
 lodash.uniq@^4.5.0:
   version "4.5.0"
@@ -8965,6 +8975,14 @@ react-dnd-html5-backend@^11.1.3:
   dependencies:
     dnd-core "^11.1.3"
 
+react-dnd-touch-backend@^11.1.3:
+  version "11.1.3"
+  resolved "https://registry.yarnpkg.com/react-dnd-touch-backend/-/react-dnd-touch-backend-11.1.3.tgz#df721eee4fcec98388216c7e7cc10b170aef7aab"
+  integrity sha512-8lz4fxfYwUuJ6Y2seQYwh8+OfwKcbBX0CIbz7AwXfBYz54Wg2nIDU6CP8Dyybt/Wyx4D3oXmTPEaOMB62uqJvQ==
+  dependencies:
+    "@react-dnd/invariant" "^2.0.0"
+    dnd-core "^11.1.3"
+
 react-dnd@^11.1.3:
   version "11.1.3"
   resolved "https://registry.yarnpkg.com/react-dnd/-/react-dnd-11.1.3.tgz#f9844f5699ccc55dfc81462c2c19f726e670c1af"
@@ -9054,6 +9072,14 @@ react-scripts@3.4.1:
     workbox-webpack-plugin "4.3.1"
   optionalDependencies:
     fsevents "2.1.2"
+
+react-throttle-render@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-throttle-render/-/react-throttle-render-2.0.0.tgz#9c2b9ead37fb2fa4db477d4e9031a91162683750"
+  integrity sha1-nCuerTf7L6TbR31OkDGpEWJoN1A=
+  dependencies:
+    hoist-non-react-statics "^1.2.0"
+    lodash.throttle "^4.1.1"
 
 react-transition-group@^4.4.0:
   version "4.4.1"

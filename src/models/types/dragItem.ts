@@ -1,3 +1,5 @@
+import { TaskInterface } from "../interfaces/taskInterface"
+
 export type ListDragItem = {
   listIndex: number
   listId: string
@@ -5,9 +7,11 @@ export type ListDragItem = {
 }
 
 export type CardDragItem = {
+  task: TaskInterface
   taskIndex: number
-  taskId: string
+  listIndex: number
   listId: string
+  taskId: string
   type: "CARD"
 }
 

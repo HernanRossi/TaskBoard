@@ -22,39 +22,26 @@ const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
   },
-  media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
-  },
-  expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)',
-  },
   avatar: {
-    backgroundColor: '#df691a',
+    backgroundColor: '#485563',
   },
 }));
 
 type CardProps = {
   task: TaskInterface
   taskHoverIndex: number
-  listHoverId: string
   onDelete?: () => void
   isPreview?: boolean
+  listIndex: number
+  listHoverId: string
 }
 
-export const StyledCard = ({ task, isPreview, onDelete, taskHoverIndex, listHoverId }: CardProps) => {
-  const { taskId, listId, taskIndex, title } = task
+export const StyledCard = ({ task, isPreview, onDelete, listIndex, listHoverId }: CardProps) => {
+  const { taskId, listId, taskIndex } = task
   const classes = useStyles();
    const ref = useRef<HTMLDivElement>(null)
   const { state, dispatch } = useAppState()
-  const { drag } = useItemDrag({ type: "CARD", taskId, taskIndex, listId })
+  const { drag } = useItemDrag({ type: "CARD", taskId, taskIndex, listId, listIndex, task })
 
   const [, drop] = useDrop({
     accept: 'CARD',
@@ -64,15 +51,16 @@ export const StyledCard = ({ task, isPreview, onDelete, taskHoverIndex, listHove
       }
       const dragIndex = item.taskIndex
       const hoverIndex = taskIndex
-      const sourceListId = item.listId
-      const targetListId = listHoverId
+      const sourceListIndex = item.listIndex
+        const targetListIndex = listIndex
 
-      dispatch({
-        type: "MOVE_TASK",
-        payload: { dragIndex, hoverIndex, sourceListId, targetListId }
-      })
-      item.taskIndex = hoverIndex
-      item.listId = targetListId
+        dispatch({
+          type: "MOVE_TASK",
+          payload: { dragIndex, hoverIndex, sourceListIndex, targetListIndex }
+        })
+        item.taskIndex = hoverIndex
+        item.listIndex = targetListIndex
+        item.listId = listHoverId
     }
   })
 

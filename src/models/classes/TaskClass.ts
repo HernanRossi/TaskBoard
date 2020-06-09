@@ -1,6 +1,7 @@
 import { TaskInterface } from "../interfaces/taskInterface";
 export class Task implements TaskInterface {
   taskIndex: number = 0
+  listIndex: number = 0
   taskId: string
   listId: string
   title: string
@@ -18,6 +19,7 @@ export class Task implements TaskInterface {
     if (!props.listId || !props.title) throw new Error('Task must have listIndex and title.')
     this.listId = props.listId
     this.taskIndex = props.taskIndex
+    this.listIndex = props.listIndex
     this.taskId = props.taskId
     this.title = props.title
 
@@ -36,6 +38,7 @@ export class Task implements TaskInterface {
       listId: this.listId,
       title: this.title,
       taskIndex: this.taskIndex,
+      listIndex: this.listIndex,
       taskId: this.taskId,
       type: this.type,
       typeLetter: this.typeLetter,

@@ -46,7 +46,7 @@ export const CardContainer = styled(DragPreviewContainer)`
   margin-bottom: 0.5rem;
   padding: 0.5rem 1rem;
   max-width: 300px;
-  border-radius: 3px;
+  border-radius: 5px;
 `
 export const NewItemFormContainer = styled.div`
   max-width: 300px;

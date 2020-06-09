@@ -100,11 +100,11 @@ export const PermanentDrawerLeft = ({ children }: React.PropsWithChildren<{}>) =
         <div className={classes.toolbar} />
         <Divider />
         <List>
-          {['scrum_board'].map((label: string, index) => (<div>{getCustomListItem(label)} </div>))}
+          {['scrum_board'].map((label: string, index) => (<div key={index}>{getCustomListItem(label)} </div>))}
         </List>
         <Divider />
         <List>
-          {['about', 'contact', 'github', 'linkedin'].map((label: string, index) => (<div>{getCustomListItem(label)} </div>))}
+          {['about', 'contact', 'github', 'linkedin'].map((label: string, index) => (<div key={index}>{getCustomListItem(label)} </div>))}
         </List>
       </Drawer>
       <main className={classes.content}>

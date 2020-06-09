@@ -1,5 +1,5 @@
-- Use tasks interface to create task class and create new task instances for all created tasks and pass those objects around
-- Implement material-ui cards for the Tasks display in lists
+- TODO fix bug where moving individual cards is very laggy
+- Fix bug where preview is not accurate
 - Implement Modals and cards for displaying details of the tasks and editing saving more details
 - Add features to delete tasks and lists
 - Add database support using express backend using mongodb and grahQL
