@@ -26,10 +26,10 @@ export const ColumnContainer = styled(DragPreviewContainer)`
   min-height:300px;
   margin-right: 20px;
   border-radius: 10px;
-  padding: 8px 8px;
+  padding: 5px 5px;
   flex-grow: 0;
   flex-shrink: 0;
-  border: 0.2px solid black;
+  border: 0.2px solid rgba(122, 115, 111,0.4);
 `
 
 export const ColumnTitle = styled.div`
@@ -42,11 +42,9 @@ export const ColumnTitle = styled.div`
 export const CardContainer = styled(DragPreviewContainer)`
   background-color: #FFFFFF;
   cursor: pointer;
-  margin-bottom: 0.5rem;
-  padding: 0.5rem 1rem;
+  margin: 0.5rem 0.5rem 0.5rem 0.5rem;
   max-width: 300px;
   border-radius: 5px;
-  box-shadow: #091e4240 0px 1px 0px 0px;
 `
 export const NewItemFormContainer = styled.div`
   max-width: 300px;

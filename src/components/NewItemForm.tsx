@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import ArrowRightIcon from '@material-ui/icons/ArrowRight'
-import { TextField, InputAdornment, Button, ButtonGroup, makeStyles } from '@material-ui/core'
-import Box from '@material-ui/core/Box';
+import { TextField, InputAdornment, Button, ButtonGroup } from '@material-ui/core'
 import { NewItemFormContainer } from '../styles/styles'
 import { useFocus } from '../utils'
 interface NewItemFormProps {
@@ -40,7 +39,7 @@ export const NewItemForm = (props: NewItemFormProps) => {
         InputProps={inputProps}
       />
       <ButtonGroup variant="text" color='primary'>
-        <Button style={{ marginTop: '10px', color: type ? '#ffffff' : '#000000', textTransform: 'none' }} onClick={() => onAdd(text)}>Create</Button>
+        <Button style={{ marginTop: '10px', color: '#000000', textTransform: 'none' }} onClick={() => onAdd(text)}>Create</Button>
         <Button style={{ marginTop: '10px', color: '#df691a', textTransform: 'none' }} onClick={() => closeShowForm()}>Cancel</Button>
       </ButtonGroup>
     </NewItemFormContainer>

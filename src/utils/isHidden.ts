@@ -1,4 +1,4 @@
-import { DragItem, CardDragItem, ListDragItem } from "../models/types/DragItem"
+import { DragItem } from "../models/types/DragItem"
 
 export const isHidden = (
   draggedItem: DragItem | undefined,

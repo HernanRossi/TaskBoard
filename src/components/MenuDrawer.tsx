@@ -5,7 +5,6 @@ import AmpStoriesIcon from '@material-ui/icons/AmpStories'
 import GitHubIcon from '@material-ui/icons/GitHub'
 import LinkedInIcon from '@material-ui/icons/LinkedIn'
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer'
-import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined'
 
 type IconMapping = {
   scrum_board: JSX.Element

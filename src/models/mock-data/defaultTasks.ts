@@ -18,8 +18,6 @@ export const defaultLists: ListInterface[] = [
     tasks:
       [
         new Task({ title: 'About App front-end', description: 'This app is created using TypeScript, React and the amazing react-dnd library.', taskId: nanoid(), listId: listIds[1]}),
-        new Task({ title: 'About App back-end', description: 'The backend logic is developed using Node.js, Express.js, Mongodb, and GraphQL.', taskId: nanoid(), listId: listIds[1]}),
-
       ]
   }, {
     listId: listIds[2],

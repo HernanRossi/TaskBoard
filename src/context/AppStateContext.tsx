@@ -52,7 +52,6 @@ const appStateReducer = (state: AppState, action: Action): AppState => {
         sourceList,
         targetList
       } = action.payload
-      console.log('Move task')
       const sourceLaneIndex = findItemIndexById(state.lists, sourceList)
       const targetLaneIndex = findItemIndexById(state.lists, targetList)
       const item = state.lists[sourceLaneIndex].tasks.splice(dragIndex, 1)[0]
