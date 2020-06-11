@@ -1,4 +1,4 @@
-import { DragItem } from "../types/dragItem"
+import { DragItem } from "../types/DragItem"
 import { ListInterface } from "./listInterface";
 
 export interface AppState {

@@ -1,17 +1,18 @@
 import { TaskInterface } from "../interfaces/taskInterface"
+import { ListInterface } from "../interfaces/listInterface"
 
 export type ListDragItem = {
-  listIndex: number
-  listId: string
+  list: ListInterface
+  index: number
+  id: string
   type: "LIST"
 }
 
 export type CardDragItem = {
   task: TaskInterface
-  taskIndex: number
-  listIndex: number
+  index: number
+  id: string
   listId: string
-  taskId: string
   type: "CARD"
 }
 

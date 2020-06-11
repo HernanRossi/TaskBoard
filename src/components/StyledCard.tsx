@@ -3,17 +3,15 @@ import React, { useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { TaskInterface } from '../models/interfaces/taskInterface';
 import { useAppState } from '../context';
 import { useItemDrag } from '../utils/useItemDrag';
-import { useDrop } from 'react-dnd';
-import { CardDragItem } from '../models/types/dragItem';
+import { useDrop, DropTargetMonitor } from 'react-dnd';
+import { DragItem } from '../models/types/DragItem';
 import { CardContainer } from '../styles/styles';
 import { isHidden } from '../utils/isHidden';
 import IconButton from '@material-ui/core/IconButton';
@@ -29,38 +27,62 @@ const useStyles = makeStyles((theme) => ({
 
 type CardProps = {
   task: TaskInterface
-  taskHoverIndex: number
-  onDelete?: () => void
+  index: number
+  id: string
+  listId: string
   isPreview?: boolean
-  listIndex: number
-  listHoverId: string
+
 }
 
-export const StyledCard = ({ task, isPreview, onDelete, listIndex, listHoverId }: CardProps) => {
-  const { taskId, listId, taskIndex } = task
+export const StyledCard = React.memo(({ task, index, id, listId, isPreview, }: CardProps) => {
   const classes = useStyles();
-   const ref = useRef<HTMLDivElement>(null)
+  const ref = useRef<HTMLDivElement>(null)
   const { state, dispatch } = useAppState()
-  const { drag } = useItemDrag({ type: "CARD", taskId, taskIndex, listId, listIndex, task })
+  const { drag } = useItemDrag({ type: "CARD", task, id, index, listId })
 
   const [, drop] = useDrop({
     accept: 'CARD',
-    hover(item: CardDragItem) {
-      if (item.taskId === taskId) {
-        return
-      }
-      const dragIndex = item.taskIndex
-      const hoverIndex = taskIndex
-      const sourceListIndex = item.listIndex
-        const targetListIndex = listIndex
+    hover(item: DragItem, monitor: DropTargetMonitor) {
+      if (item.type === "CARD") {
+        if (item.id === id) {
+          return
+        }
 
+        const dragIndex = item.index
+        const hoverIndex = index
+        const sourceList = item.listId
+        const targetList = listId
+        // Determine rectangle on screen
+        const hoverBoundingRect = ref.current?.getBoundingClientRect()
+        const clientOffset = monitor.getClientOffset()
+        if (hoverBoundingRect && clientOffset) {
+          // Get vertical middle
+          const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+          // Determine mouse position
+
+
+          // Get pixels to the top
+          const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+          // Only perform the move when the mouse has crossed half of the items height
+          // When dragging downwards, only move when the cursor is below 50%
+          // When dragging upwards, only move when the cursor is above 50%
+          // Dragging downwards
+          if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+            return
+          }
+          // Dragging upwards
+          if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+            return
+          }
+        }
+        console.log("move task in card")
         dispatch({
           type: "MOVE_TASK",
-          payload: { dragIndex, hoverIndex, sourceListIndex, targetListIndex }
+          payload: { dragIndex, hoverIndex, sourceList, targetList }
         })
-        item.taskIndex = hoverIndex
-        item.listIndex = targetListIndex
-        item.listId = listHoverId
+        item.index = hoverIndex
+        item.listId = targetList
+      }
     }
   })
 
@@ -68,7 +90,7 @@ export const StyledCard = ({ task, isPreview, onDelete, listIndex, listHoverId }
 
   return (
     <CardContainer
-      isHidden={isHidden(state.draggedItem, "CARD", taskId, isPreview)}
+      isHidden={isHidden(state.draggedItem, "CARD", id, isPreview)}
       isPreview={isPreview}
       ref={ref}
     >
@@ -95,4 +117,4 @@ export const StyledCard = ({ task, isPreview, onDelete, listIndex, listHoverId }
       </Card>
     </CardContainer>
   )
-}
+})

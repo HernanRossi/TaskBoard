@@ -1,8 +1,7 @@
 import styled from 'styled-components'
 export const AppContainer = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
   background-color: #fffff;
   flex-direction: row;
   height: 100%;
@@ -29,7 +28,7 @@ export const ColumnContainer = styled(DragPreviewContainer)`
   border-radius: 10px;
   padding: 8px 8px;
   flex-grow: 0;
-  height: 100%;
+  flex-shrink: 0;
   border: 0.2px solid black;
 `
 
@@ -47,12 +46,14 @@ export const CardContainer = styled(DragPreviewContainer)`
   padding: 0.5rem 1rem;
   max-width: 300px;
   border-radius: 5px;
+  box-shadow: #091e4240 0px 1px 0px 0px;
 `
 export const NewItemFormContainer = styled.div`
   max-width: 300px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  width: 100%;
 `
 
 export const NewItemInput = styled.input`

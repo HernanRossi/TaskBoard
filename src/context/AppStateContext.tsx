@@ -1,8 +1,8 @@
 import React, { createContext, useReducer, useContext } from "react"
-import { v4 as uuid } from 'uuid'
+import { nanoid } from "nanoid"
 import { findItemIndexById, moveItem } from "../utils"
 import { AppState } from '../models/interfaces/contextInterfaces'
-import { Action } from '../models/types/appContextTypes'
+import { Action } from '../models/types/AppContextTypes'
 import { defaultLists } from "../models/mock-data/defaultTasks"
 import { Task } from "../models/classes/TaskClass"
 
@@ -19,7 +19,7 @@ const appStateReducer = (state: AppState, action: Action): AppState => {
         ...state,
         lists: [
           ...state.lists,
-          { listId: uuid(), title: action.payload, tasks: [] }
+          { listId: nanoid(), title: action.payload, tasks: [] }
         ]
       }
     }
@@ -32,9 +32,7 @@ const appStateReducer = (state: AppState, action: Action): AppState => {
       state.lists[targetLaneIndex].tasks.push(
         new Task({
           listId: action.payload.listId,
-          listIndex: targetLaneIndex,
-          taskIndex: state.lists[targetLaneIndex].tasks.length,
-          taskId: uuid(),
+          taskId: nanoid(),
           title: action.payload.text,
         }),
       )
@@ -51,12 +49,14 @@ const appStateReducer = (state: AppState, action: Action): AppState => {
       const {
         dragIndex,
         hoverIndex,
-        sourceListIndex,
-        targetListIndex
+        sourceList,
+        targetList
       } = action.payload
-
-      const item = state.lists[sourceListIndex].tasks.splice(dragIndex, 1)[0]
-      state.lists[targetListIndex].tasks.splice(hoverIndex, 0, item)
+      console.log('Move task')
+      const sourceLaneIndex = findItemIndexById(state.lists, sourceList)
+      const targetLaneIndex = findItemIndexById(state.lists, targetList)
+      const item = state.lists[sourceLaneIndex].tasks.splice(dragIndex, 1)[0]
+      state.lists[targetLaneIndex].tasks.splice(hoverIndex, 0, item)
       return { ...state }
     }
     case "SET_DRAGGED_ITEM": {

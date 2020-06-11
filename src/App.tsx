@@ -13,7 +13,7 @@ function App() {
       <AppContainer>
         <CustomDragLayer />
         {state.lists.map((list, i) => (
-          <List listId={list.listId} title={list.title} key={list.listId} listIndex={i} />
+          <List list={list} key={list.listId} id={list.listId} index={i} />
         ))}
         <AddNewItem
           toggleButtonText="New List"

@@ -1,6 +1,6 @@
 import { useDrag } from 'react-dnd'
 import { useAppState } from '../context'
-import { DragItem } from "../models/types/dragItem"
+import { DragItem } from "../models/types/DragItem"
 import { useEffect } from 'react'
 import { getEmptyImage } from 'react-dnd-html5-backend'
 
@@ -19,5 +19,5 @@ export const useItemDrag = (item: DragItem) => {
     if (preview) preview(getEmptyImage(), { captureDraggingState: true })
   }, [preview])
   
-  return { drag, preview }
+  return { drag }
 }

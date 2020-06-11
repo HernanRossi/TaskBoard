@@ -10,28 +10,33 @@ export const CustomDragLayer: React.FC = (props) => {
     isDragging: monitor.isDragging(),
     currentOffset: monitor.getSourceClientOffset(),
   }))
-  return isDragging ? (
+
+  if (!isDragging) {
+    return null
+  }
+
+  return (
     <CustomDragLayerContainer>
       <div style={getItemStyles(currentOffset)}>
         {item.type === "LIST" ? (
           <List
-            listId={item.listId}
-            title={item.title}
-            listIndex={item.listIndex}
+            list={item.list}
+            index={item.index}
+            id={item.id}
             isPreview={isDragging ? true : false}
           />
         ) : (
             <StyledCard
               isPreview={true}
-              taskHoverIndex={0}
               task={item.task}
-              listHoverId={item.listHoverId}
-              listIndex={item.listIndex}
+              index={0}
+              id={item.id}
+              listId={item.listId}
             />
           )}
       </div>
     </CustomDragLayerContainer>
-  ) : null
+  )
 }
 
 function getItemStyles(currentOffset: XYCoord | null): React.CSSProperties {

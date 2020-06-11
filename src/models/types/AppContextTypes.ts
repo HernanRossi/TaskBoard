@@ -1,4 +1,4 @@
-import { DragItem } from "./dragItem"
+import { DragItem } from "./DragItem"
 
 export type Action =
   |
@@ -38,7 +38,7 @@ export type Action =
     payload: {
       dragIndex: number
       hoverIndex: number
-      sourceListIndex: number
-      targetListIndex: number
+      sourceList: string
+      targetList: string
     }
   }
