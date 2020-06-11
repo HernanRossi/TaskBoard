@@ -5,6 +5,7 @@ import AmpStoriesIcon from '@material-ui/icons/AmpStories'
 import GitHubIcon from '@material-ui/icons/GitHub'
 import LinkedInIcon from '@material-ui/icons/LinkedIn'
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer'
+import { DrawerFooter } from '../styles/styles';
 
 type IconMapping = {
   scrum_board: JSX.Element
@@ -36,6 +37,7 @@ type UrlMapping = {
 const urlMapping = {
   github: 'https://github.com/HernanRossi/IssueBoard',
   linkedin: 'https://www.linkedin.com/in/hernanfrossi/',
+  contact: 'https://www.hernan-rossi.com/',
 }
 
 const iconMapping: IconMapping = {
@@ -69,7 +71,7 @@ export const PermanentDrawerLeft = ({ children }: React.PropsWithChildren<{}>) =
     const icon = iconMapping[label as keyof IconMapping]
     const sectionLabel = sectionLabels[label as keyof SectionLabels]
     const itemUrl = urlMapping[label as keyof UrlMapping] || null
-    const attributes = itemUrl ? {component: 'a', href: itemUrl, target: '_blank'} : {}
+    const attributes = itemUrl ? { component: 'a', href: itemUrl, target: '_blank' } : {}
     return (
       <ListItem button {...attributes} >
         <ListItemIcon style={{ color, marginRight: '-20px' }} >{icon}</ListItemIcon>
@@ -105,11 +107,16 @@ export const PermanentDrawerLeft = ({ children }: React.PropsWithChildren<{}>) =
         <List>
           {['about', 'contact', 'github', 'linkedin'].map((label: string, index) => (<div key={index}>{getCustomListItem(label)} </div>))}
         </List>
+        <DrawerFooter >
+          Created with love by HernanRossi
+      </DrawerFooter>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
         {children}
+
       </main>
+
     </div>
   )
 }

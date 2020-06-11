@@ -72,6 +72,15 @@ export const CustomDragLayerContainer = styled.div`
   width: 100%;
   z-index: 100;
 `
+export const DrawerFooter = styled.span`
+  position: absolute;
+  bottom: 0;
+  padding: 6px 12px 2px;
+  font-weight: 400;
+  font-size: 10px;
+  text-align: center;
+  color: #df691a;  
+`
 
 export const DividerLine = styled.hr`
   display: block;

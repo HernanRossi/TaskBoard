@@ -6,6 +6,7 @@ export const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     color: '#000',
+    position:'relative'
   },
   appBar: {
     width: `calc(100% - ${drawerWidth}px)`,
