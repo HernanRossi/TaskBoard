@@ -15,6 +15,7 @@ import { DragItem } from '../models/types/DragItem';
 import { CardContainer } from '../styles/styles';
 import { isHidden } from '../utils/isHidden';
 import IconButton from '@material-ui/core/IconButton';
+import { Menu, MenuItem } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,9 +23,9 @@ const useStyles = makeStyles((theme) => ({
     height: "100%",
     border: "1px solid rgb(223,105,26, 0.3)",
     transition: "0.2s",
-    boxShadow: "2px 8px 20px -11px rgba(223,105,26,0.4)",
+    boxShadow: "2px 8px 15px -11px rgba(223,105,26,0.5)",
     "&:hover": {
-      boxShadow: "0 20px 70px -12.125px rgba(223,105,26,0.3)"
+      boxShadow: "0 20px 40px -12.125px rgba(223,105,26,0.3)"
     }
   },
   avatar: {
@@ -43,7 +44,7 @@ type CardProps = {
 }
 
 export const StyledCard = React.memo(({ task, index, id, listId, isPreview, }: CardProps) => {
-  const classes = useStyles();
+  const classes = useStyles()
   const ref = useRef<HTMLDivElement>(null)
   const { state, dispatch } = useAppState()
   const { drag } = useItemDrag({ type: "CARD", task, id, index, listId })
@@ -86,6 +87,31 @@ export const StyledCard = React.memo(({ task, index, id, listId, isPreview, }: C
 
   drag(drop(ref))
 
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null)
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+
+    if (!event?.currentTarget) return
+    setAnchorEl(event.currentTarget);
+  }
+
+  const handleDelete = () => {
+    dispatch({
+      type: "DELETE_TASK",
+      payload: { id, listId }
+    })
+    setAnchorEl(null);
+  }
+
+  const handleEdit = () => {
+    console.log('Edit')
+    setAnchorEl(null);
+  }
+  const handleClose = () => {
+    console.log('Close')
+    setAnchorEl(null);
+  }
+
   return (
     <CardContainer
       isHidden={isHidden(state.draggedItem, "CARD", id, isPreview)}
@@ -101,7 +127,7 @@ export const StyledCard = React.memo(({ task, index, id, listId, isPreview, }: C
             </Avatar>
           }
           action={
-            <IconButton aria-label="settings">
+            < IconButton aria-controls="settings" onClick={(e) => handleClick(e)} aria-haspopup="true">
               <MoreVertIcon />
             </IconButton>
           }
@@ -109,6 +135,16 @@ export const StyledCard = React.memo(({ task, index, id, listId, isPreview, }: C
           subheader={`Created: ${task.created?.toLocaleDateString("en-US")}`}
         />
         <CardContent>
+          <Menu
+            id="settings"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            <MenuItem onClick={handleEdit}>Edit</MenuItem>
+            <MenuItem onClick={handleDelete}>Delete</MenuItem>
+          </Menu>
           <Typography variant="body2" color="textSecondary" component="p">
             {task.description}
           </Typography>

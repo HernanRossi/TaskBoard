@@ -42,3 +42,18 @@ export type Action =
       targetList: string
     }
   }
+  |
+  {
+    type: "DELETE_TASK"
+    payload: {
+      id: string
+      listId: string
+    }
+  }
+  |
+  {
+    type: "DELETE_LIST"
+    payload: {
+      id: string
+    }
+  }

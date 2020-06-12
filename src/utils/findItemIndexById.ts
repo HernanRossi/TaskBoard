@@ -1,5 +1,11 @@
 import { ListInterface } from "../models/interfaces/listInterface"
 
-export const findItemIndexById = (items: ListInterface[], id: string) => {
-  return items.findIndex((item: ListInterface) => item.listId === id)
+interface Item {
+  listId?: string
+  taskId?: string
+}
+
+export const findItemIndexById = <T extends Item>(items: T[], id: string) => {
+  
+  return items.findIndex((item: T) => item.listId === id || item.taskId === id)
 }

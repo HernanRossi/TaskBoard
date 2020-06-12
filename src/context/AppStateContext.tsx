@@ -61,6 +61,19 @@ const appStateReducer = (state: AppState, action: Action): AppState => {
     case "SET_DRAGGED_ITEM": {
       return { ...state, draggedItem: action.payload }
     }
+    case "DELETE_TASK": {
+      const { id, listId } = action.payload
+      const listIndex = findItemIndexById(state.lists, listId)
+      const taskIndex = findItemIndexById(state.lists[listIndex].tasks, id)
+      state.lists[listIndex].tasks.splice(taskIndex, 1)
+      return { ...state }
+    }
+    case "DELETE_LIST": {
+      const { id } = action.payload
+      const listIndex = findItemIndexById(state.lists, id)
+      state.lists.splice(listIndex, 1)
+      return { ...state }
+    }
     default: {
       return state
     }
