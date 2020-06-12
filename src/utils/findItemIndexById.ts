@@ -1,4 +1,3 @@
-import { ListInterface } from "../models/interfaces/listInterface"
 
 interface Item {
   listId?: string

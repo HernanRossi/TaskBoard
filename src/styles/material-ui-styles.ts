@@ -9,7 +9,7 @@ export const useStyles = makeStyles((theme) => ({
     position:'relative'
   },
   appBar: {
-    width: `calc(100% - ${drawerWidth}px)`,
+    width: `calc(100% + ${drawerWidth}px)`,
     marginLeft: drawerWidth,
     background: 'linear-gradient(90deg, rgba(166,38,70,1) 0%, rgba(249,91,0,0.927608543417367) 48%, rgba(249,249,249,0.7651435574229692) 97%)'
   },

@@ -73,6 +73,7 @@ export const CustomDragLayerContainer = styled.div`
   z-index: 100;
 `
 export const DrawerFooter = styled.span`
+  userSelect: none;
   position: absolute;
   bottom: 0;
   padding: 6px 12px 2px;

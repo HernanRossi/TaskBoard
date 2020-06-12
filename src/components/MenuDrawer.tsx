@@ -64,7 +64,7 @@ const sectionLabels: SectionLabels = {
   linkedin: 'LinkedIn'
 }
 export const PermanentDrawerLeft = ({ children }: React.PropsWithChildren<{}>) => {
-  const classes: any = useStyles();
+  const classes = useStyles();
 
   function getCustomListItem(label: string): JSX.Element {
     const color = colorMapping[label as keyof ColorMapping]
@@ -83,9 +83,9 @@ export const PermanentDrawerLeft = ({ children }: React.PropsWithChildren<{}>) =
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar}>
+      <AppBar className={classes.appBar}>
         <Toolbar>
-          <Typography variant="h6" noWrap>
+          <Typography variant="h6" style={{marginLeft: '200px',  userSelect: 'none'}}>
             Hernan Francisco Rossi
           </Typography>
         </Toolbar>
