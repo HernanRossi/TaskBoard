@@ -142,7 +142,7 @@ export const StyledCard = React.memo(({ task, index, id, listId, isPreview, }: C
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <MenuItem onClick={handleEdit}>Edit</MenuItem>
+            {/* <MenuItem onClick={handleEdit}>Edit</MenuItem> */}
             <MenuItem onClick={handleDelete}>Delete</MenuItem>
           </Menu>
           <Typography variant="body2" color="textSecondary" component="p">

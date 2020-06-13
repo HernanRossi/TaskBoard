@@ -100,11 +100,9 @@ export const List = ({ list, id, index, isPreview }: ListProps) => {
   }
 
   const handleEdit = () => {
-    console.log('Edit')
     setAnchorEl(null);
   }
   const handleClose = () => {
-    console.log('Close')
     setAnchorEl(null);
   }
 
@@ -144,7 +142,7 @@ export const List = ({ list, id, index, isPreview }: ListProps) => {
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         transformOrigin={{ vertical: "top", horizontal: "center" }}
       >
-        <MenuItem onClick={handleEdit}>Edit</MenuItem>
+        {/* <MenuItem onClick={handleEdit}>Edit</MenuItem> */}
         <MenuItem onClick={handleDelete}>Delete</MenuItem>
       </Menu>
     </ColumnContainer>

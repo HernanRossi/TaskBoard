@@ -6,6 +6,7 @@ import GitHubIcon from '@material-ui/icons/GitHub'
 import LinkedInIcon from '@material-ui/icons/LinkedIn'
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer'
 import { DrawerFooter } from '../styles/styles';
+import {CustomizedDialogs} from './AboutDialog'
 
 type IconMapping = {
   scrum_board: JSX.Element
@@ -66,14 +67,29 @@ const sectionLabels: SectionLabels = {
 export const PermanentDrawerLeft = ({ children }: React.PropsWithChildren<{}>) => {
   const classes = useStyles();
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   function getCustomListItem(label: string): JSX.Element {
     const color = colorMapping[label as keyof ColorMapping]
     const icon = iconMapping[label as keyof IconMapping]
     const sectionLabel = sectionLabels[label as keyof SectionLabels]
     const itemUrl = urlMapping[label as keyof UrlMapping] || null
-    const attributes = itemUrl ? { component: 'a', href: itemUrl, target: '_blank' } : {}
+    let attributes = {}
+    if (label === 'about') {
+      attributes = { onClick: () => handleClickOpen() }
+    } else {
+      attributes = itemUrl ? { component: 'a', href: itemUrl, target: '_blank' } : {}
+    }
     return (
-      <ListItem button {...attributes} >
+      <ListItem button {...attributes} key={label} >
         <ListItemIcon style={{ color, marginRight: '-20px' }} >{icon}</ListItemIcon>
         <ListItemText style={{ color }} primary={sectionLabel} />
       </ListItem>
@@ -99,6 +115,8 @@ export const PermanentDrawerLeft = ({ children }: React.PropsWithChildren<{}>) =
         anchor="left"
       >
         <div className={classes.toolbar} />
+        <CustomizedDialogs handleClose={handleClose} open={open}/>
+
         <Divider />
         <List>
           {['scrum_board'].map((label: string, index) => (<div key={index}>{getCustomListItem(label)} </div>))}
