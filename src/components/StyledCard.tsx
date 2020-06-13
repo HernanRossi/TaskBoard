@@ -25,12 +25,15 @@ const useStyles = makeStyles((theme) => ({
     transition: "0.2s",
     boxShadow: "2px 8px 15px -11px rgba(223,105,26,0.5)",
     "&:hover": {
-      boxShadow: "0 20px 40px -12.125px rgba(223,105,26,0.3)"
+      boxShadow: "0 15px 55px -16.125px rgba(223,105,26,0.2)"
     }
   },
   avatar: {
     border: "2px solid white",
     backgroundColor: '#485563',
+  },
+  iconButton: {
+    width: '3px',
   },
 }));
 
@@ -103,10 +106,10 @@ export const StyledCard = React.memo(({ task, index, id, listId, isPreview, }: C
     setAnchorEl(null);
   }
 
-  const handleEdit = () => {
-    console.log('Edit')
-    setAnchorEl(null);
-  }
+  // const handleEdit = () => {
+  //   console.log('Edit')
+  //   setAnchorEl(null);
+  // }
   const handleClose = () => {
     console.log('Close')
     setAnchorEl(null);
@@ -127,8 +130,8 @@ export const StyledCard = React.memo(({ task, index, id, listId, isPreview, }: C
             </Avatar>
           }
           action={
-            < IconButton aria-controls="settings" onClick={(e) => handleClick(e)} aria-haspopup="true">
-              <MoreVertIcon />
+            < IconButton  className={classes.iconButton }aria-controls="settings" onClick={(e) => handleClick(e)} aria-haspopup="true">
+              <MoreVertIcon/>
             </IconButton>
           }
           title={task.title}
