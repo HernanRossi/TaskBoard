@@ -1,11 +1,11 @@
 
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Avatar from '@material-ui/core/Avatar';
-import Typography from '@material-ui/core/Typography';
+import { useFocus } from '../utils'
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { TaskInterface } from '../models/interfaces/taskInterface';
 import { useAppState } from '../context';
@@ -15,7 +15,11 @@ import { DragItem } from '../models/types/DragItem';
 import { CardContainer } from '../styles/styles';
 import { isHidden } from '../utils/isHidden';
 import IconButton from '@material-ui/core/IconButton';
-import { Menu, MenuItem } from '@material-ui/core';
+import { Menu, MenuItem, TextField } from '@material-ui/core';
+
+const inputProps = {
+  placeholder: 'Add description'
+}
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,33 +47,26 @@ type CardProps = {
   id: string
   listId: string
   isPreview?: boolean
-
 }
 
-export const StyledCard = React.memo(({ task, index, id, listId, isPreview, }: CardProps) => {
+export const StyledCard = React.memo(({ task, index, id, listId, isPreview }: CardProps) => {
   const classes = useStyles()
   const ref = useRef<HTMLDivElement>(null)
   const { state, dispatch } = useAppState()
   const { drag } = useItemDrag({ type: "CARD", task, id, index, listId })
-
   const [, drop] = useDrop({
     accept: 'CARD',
     hover(item: DragItem, monitor: DropTargetMonitor) {
       if (item.type === "CARD") {
-        if (item.id === id) {
-          return
-        }
-
+        if (item.id === id) return
         const dragIndex = item.index
         const hoverIndex = index
         const sourceList = item.listId
         const targetList = listId
-        // Determine rectangle on screen
         const hoverBoundingRect = ref.current?.getBoundingClientRect()
         const clientOffset = monitor.getClientOffset()
         if (hoverBoundingRect && clientOffset) {
           const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 4
-          // Determine mouse position
           const hoverClientY = clientOffset.y - hoverBoundingRect.top;
           if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
             return
@@ -115,6 +112,10 @@ export const StyledCard = React.memo(({ task, index, id, listId, isPreview, }: C
     setAnchorEl(null);
   }
 
+  const updateDesc = (text: string) => {
+    task.description = text
+  }
+
   return (
     <CardContainer
       isHidden={isHidden(state.draggedItem, "CARD", id, isPreview)}
@@ -130,8 +131,8 @@ export const StyledCard = React.memo(({ task, index, id, listId, isPreview, }: C
             </Avatar>
           }
           action={
-            < IconButton  className={classes.iconButton }aria-controls="settings" onClick={(e) => handleClick(e)} aria-haspopup="true">
-              <MoreVertIcon/>
+            < IconButton className={classes.iconButton} aria-controls="settings" onClick={(e) => handleClick(e)} aria-haspopup="true">
+              <MoreVertIcon />
             </IconButton>
           }
           title={task.title}
@@ -148,9 +149,18 @@ export const StyledCard = React.memo(({ task, index, id, listId, isPreview, }: C
             {/* <MenuItem onClick={handleEdit}>Edit</MenuItem> */}
             <MenuItem onClick={handleDelete}>Delete</MenuItem>
           </Menu>
-          <Typography variant="body2" color="textSecondary" component="p">
-            {task.description}
-          </Typography>
+
+          <TextField
+            id="new-item"
+            style={{ marginTop: '10px', color: '#ffffff' }}
+            autoComplete='off'
+            type='text'
+            size="small"
+            multiline
+            value={task.description}
+            onChange={e => updateDesc(e.target.value)}
+            InputProps={inputProps}
+          />
         </CardContent>
       </Card>
     </CardContainer>
