@@ -53,6 +53,8 @@ export const StyledCard = React.memo(({ task, index, id, listId, isPreview }: Ca
   const classes = useStyles()
   const ref = useRef<HTMLDivElement>(null)
   const { state, dispatch } = useAppState()
+  const [text, setText] = useState("")
+
   const { drag } = useItemDrag({ type: "CARD", task, id, index, listId })
   const [, drop] = useDrop({
     accept: 'CARD',
@@ -113,6 +115,7 @@ export const StyledCard = React.memo(({ task, index, id, listId, isPreview }: Ca
   }
 
   const updateDesc = (text: string) => {
+    setText(text)
     task.description = text
   }
 
