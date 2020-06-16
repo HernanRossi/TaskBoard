@@ -1,5 +1,6 @@
 import React, { createContext, useReducer, useContext, useEffect } from "react"
 import { nanoid } from "nanoid"
+import _ from 'lodash'
 import { findItemIndexById, moveItem } from "../utils"
 import { AppState } from '../models/interfaces/contextInterfaces'
 import { Action } from '../types/AppContextTypes'
@@ -7,7 +8,7 @@ import { defaultBoard } from "../models/mock-data/defaultTasks"
 import { Task } from "../models/classes/TaskClass"
 
 const appData: AppState = {
-  board: defaultBoard,
+  board: _.cloneDeep(defaultBoard),
   draggedItem: undefined,
 }
 
@@ -16,9 +17,9 @@ const appStateReducer = (state: AppState, action: Action): AppState => {
 
   switch (action.type) {
       case "RESET": {
-      localStorage.removeItem("state");
+      localStorage.removeItem("state")
       return {
-        board: defaultBoard, draggedItem: undefined,
+        board: _.cloneDeep(defaultBoard), draggedItem: undefined,
       }
     }
     case "ADD_LIST": {
@@ -103,7 +104,6 @@ interface AppStateContextProps {
 
 export const AppStateProvider = ({ children }: React.PropsWithChildren<{}>) => {
   const persistedState = localStorage.getItem("state")
-  console.log("PERSISTED stae", persistedState)
   let localState = appData
   if(persistedState) {
     localState = JSON.parse(persistedState)

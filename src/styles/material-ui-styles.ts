@@ -30,5 +30,15 @@ export const useStyles = makeStyles((theme) => ({
   },
   title:{
     flexGrow: 1
-  }
+  },
+  button: {
+    background: 'white',
+    borderRadius: 3,
+    border: 0,
+    color: '#df691a',
+    height: 30,
+    padding: '0 30px',
+    margin: 'auto 50% auto auto',
+    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .2)',
+  },
 }));

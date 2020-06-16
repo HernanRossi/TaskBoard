@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useStyles } from "../styles/material-ui-styles"
-import { CssBaseline, AppBar, Toolbar, Drawer, Divider, List, ListItem, ListItemText, ListItemIcon, TextField, createMuiTheme, MuiThemeProvider} from "@material-ui/core"
+import { CssBaseline, AppBar, Toolbar, Drawer, Divider, List, ListItem, ListItemText, ListItemIcon, TextField, createMuiTheme, MuiThemeProvider, Button } from "@material-ui/core"
 import AmpStoriesIcon from '@material-ui/icons/AmpStories'
 import GitHubIcon from '@material-ui/icons/GitHub'
 import LinkedInIcon from '@material-ui/icons/LinkedIn'
@@ -66,14 +66,6 @@ const sectionLabels: SectionLabels = {
   github: 'GitHub',
   linkedin: 'LinkedIn'
 }
-
-// const styles = {
-//   container: {
-//     display: 'flex',
-//     flexWrap: 'wrap',
-//     justifyContent: 'center'
-//   },
-// 
 
 const theme = createMuiTheme({
   palette: {
@@ -166,6 +158,9 @@ export const PermanentDrawerLeft = ({ children }: React.PropsWithChildren<{}>) =
               InputProps={{ style: { fontSize: 20, textAlign: 'center', marginLeft: '200px', } }}
             />
           </MuiThemeProvider>
+          <Button variant="contained" 
+            className={classes.button}
+            onClick={e => dispatch({ type: "RESET", payload: {} })} >Reset</Button>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -194,9 +189,7 @@ export const PermanentDrawerLeft = ({ children }: React.PropsWithChildren<{}>) =
       <main className={classes.content}>
         <div className={classes.toolbar} />
         {children}
-
       </main>
-
     </div>
   )
 }
