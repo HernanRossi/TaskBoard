@@ -1,4 +1,5 @@
 import { makeStyles } from "@material-ui/core";
+import { ThemeContext } from "styled-components";
 
 const drawerWidth = 175
 
@@ -6,7 +7,7 @@ export const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     color: '#000',
-    position:'relative'
+    position: 'relative'
   },
   appBar: {
     width: `calc(100% + ${drawerWidth}px)`,
@@ -26,5 +27,8 @@ export const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing(3)
+  },
+  title:{
+    flexGrow: 1
   }
 }));

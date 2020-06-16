@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useStyles } from "../styles/material-ui-styles"
-import { CssBaseline, AppBar, Toolbar, Drawer, Typography, Divider, List, ListItem, ListItemText, ListItemIcon } from "@material-ui/core"
+import { CssBaseline, AppBar, Toolbar, Drawer, Divider, List, ListItem, ListItemText, ListItemIcon, TextField, createMuiTheme, MuiThemeProvider} from "@material-ui/core"
 import AmpStoriesIcon from '@material-ui/icons/AmpStories'
 import GitHubIcon from '@material-ui/icons/GitHub'
 import LinkedInIcon from '@material-ui/icons/LinkedIn'
+import InfoIcon from '@material-ui/icons/Info'
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer'
-import { DrawerFooter } from '../styles/styles';
-import {CustomizedDialogs} from './AboutDialog'
+import { useAppState } from '../context/AppStateContext'
+import { DrawerFooter } from '../styles/styles'
+import { CustomizedDialogs } from './AboutDialog'
 
 type IconMapping = {
   scrum_board: JSX.Element
@@ -43,7 +45,7 @@ const urlMapping = {
 
 const iconMapping: IconMapping = {
   scrum_board: <AmpStoriesIcon />,
-  about: <div />,
+  about: <InfoIcon />,
   contact: <QuestionAnswerIcon />,
   github: <GitHubIcon />,
   linkedin: <LinkedInIcon />,
@@ -64,8 +66,54 @@ const sectionLabels: SectionLabels = {
   github: 'GitHub',
   linkedin: 'LinkedIn'
 }
+
+// const styles = {
+//   container: {
+//     display: 'flex',
+//     flexWrap: 'wrap',
+//     justifyContent: 'center'
+//   },
+// 
+
+const theme = createMuiTheme({
+  palette: {
+    primary: { main: '#df691a' },
+    secondary: { main: '#ffffff' },
+  },
+  overrides: {
+    MuiInput: {
+      root: {
+        color: '#ffffff'
+      },
+      underline: {
+        '&:before': { // underline color when textfield is inactive
+          borderBottomColor: '#df691a',
+          backgroundColor: '#df691a',
+          height: '1px',
+        },
+        '&:hover:not($disabled):not($focused):not($error):before': {
+          borderBottom: `2px solid #ffffff`,
+        },
+        '&:hover:not($disabled):after': { // underline color when hovered
+          borderBottomColor: '#ffffff',
+          backgroundColor: '#ffffff',
+          height: '1px',
+        },
+        '&:after': {
+          borderBottomColor: '#df691a',
+          backgroundColor: '#df691a',
+          height: '1px',
+        },
+      },
+
+    },
+  }
+})
+
 export const PermanentDrawerLeft = ({ children }: React.PropsWithChildren<{}>) => {
   const classes = useStyles();
+  const { state, dispatch } = useAppState()
+  const [text, setText] = useState("")
 
   const [open, setOpen] = React.useState(false);
 
@@ -96,14 +144,28 @@ export const PermanentDrawerLeft = ({ children }: React.PropsWithChildren<{}>) =
     )
   }
 
+  const updateDesc = (text: string) => {
+    setText(text)
+    dispatch({ type: "UPDATE_BOARD", payload: { title: text } })
+  }
+
   return (
     <div className={classes.root}>
       <CssBaseline />
       <AppBar className={classes.appBar}>
         <Toolbar>
-          <Typography variant="h6" style={{marginLeft: '200px',  userSelect: 'none'}}>
-            Hernan Francisco Rossi
-          </Typography>
+          <MuiThemeProvider theme={theme}>
+            <TextField
+              id="new-item"
+              autoComplete='off'
+              type='text'
+              size="medium"
+              value={state.board.title}
+              onChange={e => updateDesc(e.target.value)}
+              placeholder={'Add Board Title'}
+              InputProps={{ style: { fontSize: 20, textAlign: 'center', marginLeft: '200px', } }}
+            />
+          </MuiThemeProvider>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -115,7 +177,7 @@ export const PermanentDrawerLeft = ({ children }: React.PropsWithChildren<{}>) =
         anchor="left"
       >
         <div className={classes.toolbar} />
-        <CustomizedDialogs handleClose={handleClose} open={open}/>
+        <CustomizedDialogs handleClose={handleClose} open={open} />
 
         <Divider />
         <List>
@@ -138,5 +200,3 @@ export const PermanentDrawerLeft = ({ children }: React.PropsWithChildren<{}>) =
     </div>
   )
 }
-
-

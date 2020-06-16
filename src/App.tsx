@@ -1,8 +1,8 @@
-import React from 'react';
-import './styles/App.css';
+import React from 'react'
+import './styles/App.css'
 import { List, AddNewItem, CustomDragLayer, PermanentDrawerLeft } from './components'
 import { AppContainer } from './styles/styles'
-import { useAppState } from './context';
+import { useAppState } from './context'
 
 function App() {
 
@@ -12,7 +12,7 @@ function App() {
     <PermanentDrawerLeft>
       <AppContainer>
         <CustomDragLayer />
-        {state.lists.map((list, i) => (
+        {state.board.lists.map((list, i) => (
           <List list={list} key={list.listId} id={list.listId} index={i} />
         ))}
         <AddNewItem

@@ -1,6 +1,7 @@
 import { Task } from "../classes/TaskClass";
 import { nanoid } from "nanoid"
 import { ListInterface } from "../interfaces/listInterface";
+import { Board } from "../classes/BoardClass";
 const listIds = [nanoid(), nanoid(), nanoid(), nanoid()]
 
 export const defaultLists: ListInterface[] = [
@@ -37,3 +38,5 @@ export const defaultLists: ListInterface[] = [
       ]
   }
 ]
+
+export const defaultBoard = new Board({title: 'Default Board', userId: nanoid(), boardId: nanoid(), lists: defaultLists })

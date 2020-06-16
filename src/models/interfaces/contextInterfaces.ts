@@ -1,7 +1,7 @@
-import { DragItem } from "../types/DragItem"
-import { ListInterface } from "./listInterface";
+import { DragItem } from "../../types/DragItem"
+import { BoardInterface } from "./boardInterface";
 
 export interface AppState {
-  lists: ListInterface[]
+  board: BoardInterface
   draggedItem: DragItem | undefined
 }

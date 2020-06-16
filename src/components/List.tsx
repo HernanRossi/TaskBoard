@@ -5,7 +5,7 @@ import { ColumnContainer, ColumnTitle, DividerLine } from '../styles/styles'
 import { AddNewItem } from './AddNewItem'
 import { useAppState } from '../context'
 import { useItemDrag } from '../utils/useItemDrag'
-import { DragItem } from '../models/types/DragItem'
+import { DragItem } from '../types/DragItem'
 import { isHidden } from '../utils/isHidden'
 import { StyledCard } from './StyledCard'
 import { ListInterface } from '../models/interfaces/listInterface'
@@ -99,9 +99,9 @@ export const List = ({ list, id, index, isPreview }: ListProps) => {
     setAnchorEl(null);
   }
 
-  const handleEdit = () => {
-    setAnchorEl(null);
-  }
+  // const handleEdit = () => {
+  //   setAnchorEl(null);
+  // }
   const handleClose = () => {
     setAnchorEl(null);
   }
@@ -115,13 +115,12 @@ export const List = ({ list, id, index, isPreview }: ListProps) => {
     >
       <ColumnTitle>
         {title}
-
       </ColumnTitle>
       < IconButton className={classes.iconButton} style={{ left: '41%', marginTop: '-20px', marginBottom: '-10px', color: '#df691a', paddingTop: '-20px' }} aria-controls="settings" onClick={(e) => handleClick(e)} aria-haspopup="true">
         <MoreHorizIcon />
       </IconButton>
       <DividerLine />
-      {state.lists[index].tasks.map((task, i) => (
+      {state.board.lists[index].tasks.map((task, i) => (
         <StyledCard
           id={task.taskId}
           key={task.taskId}

@@ -1,6 +1,6 @@
 import { useDrag } from 'react-dnd'
 import { useAppState } from '../context'
-import { DragItem } from "../models/types/DragItem"
+import { DragItem } from "../types/DragItem"
 import { useEffect } from 'react'
 import { getEmptyImage } from 'react-dnd-html5-backend'
 

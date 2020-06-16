@@ -5,13 +5,12 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Avatar from '@material-ui/core/Avatar';
-import { useFocus } from '../utils'
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { TaskInterface } from '../models/interfaces/taskInterface';
 import { useAppState } from '../context';
 import { useItemDrag } from '../utils/useItemDrag';
 import { useDrop, DropTargetMonitor } from 'react-dnd';
-import { DragItem } from '../models/types/DragItem';
+import { DragItem } from '../types/DragItem';
 import { CardContainer } from '../styles/styles';
 import { isHidden } from '../utils/isHidden';
 import IconButton from '@material-ui/core/IconButton';
@@ -139,7 +138,7 @@ export const StyledCard = React.memo(({ task, index, id, listId, isPreview }: Ca
             </IconButton>
           }
           title={task.title}
-          subheader={`Created: ${task.created?.toLocaleDateString("en-US")}`}
+          subheader={`Created: ${new Date(task.created || '').toLocaleDateString("en-US")}`}
         />
         <CardContent>
           <Menu

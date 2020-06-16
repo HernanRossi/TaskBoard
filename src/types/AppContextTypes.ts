@@ -57,3 +57,15 @@ export type Action =
       id: string
     }
   }
+  |
+  {
+    type: "UPDATE_BOARD"
+    payload: {
+      title: string
+    }
+  }
+  |
+  {
+    type: "RESET"
+    payload: {}
+  }

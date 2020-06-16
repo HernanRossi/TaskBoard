@@ -1,5 +1,5 @@
-import { TaskInterface } from "../interfaces/taskInterface"
-import { ListInterface } from "../interfaces/listInterface"
+import { TaskInterface } from "../models/interfaces/taskInterface"
+import { ListInterface } from "../models/interfaces/listInterface"
 
 export type ListDragItem = {
   list: ListInterface
