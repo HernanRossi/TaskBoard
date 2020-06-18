@@ -8,14 +8,13 @@ export class Task implements TaskInterface {
   description?: string
   priority: number
   state: 'Closed' | 'Open' | 'In progress' | 'Created'
-  created: Date
+  created: Date | string
 
   constructor(props: TaskInterface) {
     if (!props.listId || !props.title) throw new Error('Task must have listIndex and title.')
     this.listId = props.listId
     this.taskId = props.taskId
     this.title = props.title
-
     this.type = props.type || 'Task'
     this.typeLetter = props.type ? props.type[0] : 'T'
     this.description = props.description || ''

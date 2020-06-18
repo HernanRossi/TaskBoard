@@ -5,8 +5,8 @@ import { Board } from "../models";
 export interface AppState {
   cachedReset: BoardInterface 
   board: BoardInterface
-  draggedItem: DragItem | undefined
-  sessionId: string
+  draggedItem?: DragItem
+  sessionId?: string
 }
 
 export interface Session {

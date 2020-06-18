@@ -11,39 +11,42 @@ import { Board } from "../models"
 const appData: AppState = {
   cachedReset: _.cloneDeep(defaultBoard),
   board: _.cloneDeep(defaultBoard),
-  sessionId: '',
+  sessionId: undefined,
   draggedItem: undefined,
 }
 
 const appStateReducer = (state: AppState, action: Action): AppState => {
-  const { sessionId, boardId, title } = state.board
 
   switch (action.type) {
     case "START_SESSION": {
-      if(state.sessionId) return {...state}
+      if (state.sessionId) return { ...state }
       const { session } = action.payload
-      const {boards} = session
+      const { boards } = session
       const sessionBoard = new Board(boards[0])
+      const {sessionId} = sessionBoard
+      const newSession = _.cloneDeep(sessionBoard)
+      const cachedReset = _.cloneDeep(newSession)
       return {
         sessionId,
-        board: _.cloneDeep(sessionBoard), draggedItem: undefined,
-        cachedReset: _.cloneDeep(sessionBoard)
+        board: newSession, draggedItem: undefined,
+        cachedReset
       }
     }
     case "RESET": {
       const reset = _.cloneDeep(state.cachedReset)
       localStorage.removeItem("state")
       return {
-        ...state,
+        cachedReset: _.cloneDeep(reset),
         board: reset, draggedItem: undefined,
+        sessionId: reset.sessionId
       }
     }
     case "ADD_LIST": {
-      if (action.payload.length < 1) return { ...state, board: { lists: [...state.board.lists], sessionId, boardId, title } }
+      if (action.payload.length < 1) return { ...state}
       return {
         ...state,
         board: {
-          sessionId, boardId, title,
+          ...state.board,
           lists: [...state.board.lists, { listId: nanoid(), title: action.payload, tasks: [] }]
         }
       }

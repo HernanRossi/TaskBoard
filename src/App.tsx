@@ -7,7 +7,6 @@ import { nanoid } from 'nanoid'
 import { Session } from './interfaces/contextInterfaces'
 import { StartSession } from './graphql/mutations'
 import { useMutation } from '@apollo/client'
-import { Typography } from '@material-ui/core'
 
 function App() {
   const { state, dispatch } = useAppState()
@@ -34,8 +33,6 @@ function App() {
     if (loading) {
       return (
         <LoadingContainer >
-          {/* <Typography >We are loading the data one second please :)</Typography> */}
-
           <LogoLoading />
         </LoadingContainer>
       )

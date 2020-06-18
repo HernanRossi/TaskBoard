@@ -8,8 +8,8 @@ export interface TaskInterface {
   description?: string
   priority?: number
   state?: 'Closed' | 'Open' | 'In progress' | 'Created'
-  created?: Date
-  updated?: Date
+  created?: Date | string
+  updated?: Date | string
   assignee?: string
   creator?: string
 }

@@ -129,7 +129,6 @@ export const StyledCard = React.memo(({ task, index, id, listId, isPreview }: Ca
         <CardHeader
           avatar={
             <Avatar aria-label="task" className={classes.avatar}>
-              {task.typeLetter}
             </Avatar>
           }
           action={

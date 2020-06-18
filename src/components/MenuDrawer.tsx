@@ -107,9 +107,11 @@ const theme = createMuiTheme({
 export const PermanentDrawerLeft = ({ children }: React.PropsWithChildren<{}>) => {
   const classes = useStyles();
   const { state, dispatch } = useAppState()
+  const {title} = state.board
+
   const { sessionId, boardId } = state.board
 
-  const [title, setText] = useState("")
+  const [localTitle, setText] = useState("")
 
   const [open, setOpen] = React.useState(false);
 
@@ -144,13 +146,12 @@ export const PermanentDrawerLeft = ({ children }: React.PropsWithChildren<{}>) =
 
   const updateDesc = (title: string) => {
     setText(title)
-    dispatch({ type: "UPDATE_BOARD", payload: { title: title } })
-    updateBoardQ({ variables: { sessionId, boardId, title: title } })
+    dispatch({ type: "UPDATE_BOARD", payload: { title } })
+    updateBoardQ({ variables: { sessionId, boardId, title } })
   }
 
 
   useEffect(() => {
-    const title = state.board.title
     setText(title)
   }, [title])
 
@@ -165,7 +166,7 @@ export const PermanentDrawerLeft = ({ children }: React.PropsWithChildren<{}>) =
               autoComplete='off'
               type='title'
               size="medium"
-              value={title}
+              value={localTitle}
               onChange={e => updateDesc(e.target.value)}
               placeholder={'Add Board Title'}
               InputProps={{ style: { fontSize: 20, textAlign: 'center', marginLeft: '200px', } }}
