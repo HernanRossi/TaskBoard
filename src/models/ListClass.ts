@@ -8,7 +8,7 @@ export class List implements ListInterface {
   constructor(props: ListInterface) {
     if (!props.listId) throw new Error('List must have listId.')
     this.listId = props.listId
-    this.tasks = props.tasks
+    this.tasks = props.tasks || []
     this.title = props.title
   }
 }

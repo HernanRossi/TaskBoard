@@ -6,7 +6,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Avatar from '@material-ui/core/Avatar';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { TaskInterface } from '../models/interfaces/taskInterface';
+import { TaskInterface } from '../interfaces/taskInterface';
 import { useAppState } from '../context';
 import { useItemDrag } from '../utils/useItemDrag';
 import { useDrop, DropTargetMonitor } from 'react-dnd';

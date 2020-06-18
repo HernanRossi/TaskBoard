@@ -1,4 +1,6 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
+import Logo from  '../assets/Logo-outline-orangered.png'
+
 export const AppContainer = styled.div`
   display: flex;
   align-items: flex-start;
@@ -98,4 +100,34 @@ export const DividerLine = styled.hr`
   border-bottom: 1px solid #df691a;
   margin-bottom: 20px;
   margin-top: 0px;
+`
+
+const logoAnimation = keyframes`
+  0% {
+    width: 125px;
+    height:95px;
+    opacity: 0;
+  }
+  50% {
+    width: 250px;
+    height: 190px;
+    opacity: 0.85;
+  }
+  100% {
+    width: 125px;
+    height:95px;
+    opacity: 0;
+  }
+}`
+
+export const LogoLoading = styled.div`
+  background-size: 100% 100%;
+  background-image: url(${Logo});
+  width: 250px;
+  height: 190px;
+  -webkit-animation: ${logoAnimation} 4s cubic-bezier(.85,.12,.31,.98) infinite;
+  animation: ${logoAnimation}  4s cubic-bezier(.85,.12,.31,.98) infinite;
+  display: flex;
+  margin: auto;
+  margin-top: 125px;
 `

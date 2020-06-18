@@ -1,5 +1,5 @@
 import { DragItem } from "./DragItem"
-
+import { Session } from '../interfaces/contextInterfaces'
 export type Action =
   |
   {
@@ -68,4 +68,9 @@ export type Action =
   {
     type: "RESET"
     payload: {}
+  }
+  |
+  {
+    type: "START_SESSION"
+    payload: { session: Session }
   }

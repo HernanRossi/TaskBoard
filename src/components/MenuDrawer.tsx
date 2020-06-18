@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react'
+import { useMutation } from '@apollo/client'
 import { useStyles } from "../styles/material-ui-styles"
 import { CssBaseline, AppBar, Toolbar, Drawer, Divider, List, ListItem, ListItemText, ListItemIcon, TextField, createMuiTheme, MuiThemeProvider, Button } from "@material-ui/core"
 import AmpStoriesIcon from '@material-ui/icons/AmpStories'
@@ -9,6 +10,7 @@ import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer'
 import { useAppState } from '../context/AppStateContext'
 import { DrawerFooter } from '../styles/styles'
 import { CustomizedDialogs } from './AboutDialog'
+import { updateBoard } from '../graphql/mutations'
 
 type IconMapping = {
   scrum_board: JSX.Element
@@ -105,7 +107,9 @@ const theme = createMuiTheme({
 export const PermanentDrawerLeft = ({ children }: React.PropsWithChildren<{}>) => {
   const classes = useStyles();
   const { state, dispatch } = useAppState()
-  const [text, setText] = useState("")
+  const { sessionId, boardId } = state.board
+
+  const [title, setText] = useState("")
 
   const [open, setOpen] = React.useState(false);
 
@@ -136,10 +140,19 @@ export const PermanentDrawerLeft = ({ children }: React.PropsWithChildren<{}>) =
     )
   }
 
-  const updateDesc = (text: string) => {
-    setText(text)
-    dispatch({ type: "UPDATE_BOARD", payload: { title: text } })
+  const [updateBoardQ] = useMutation(updateBoard)
+
+  const updateDesc = (title: string) => {
+    setText(title)
+    dispatch({ type: "UPDATE_BOARD", payload: { title: title } })
+    updateBoardQ({ variables: { sessionId, boardId, title: title } })
   }
+
+
+  useEffect(() => {
+    const title = state.board.title
+    setText(title)
+  }, [title])
 
   return (
     <div className={classes.root}>
@@ -150,15 +163,15 @@ export const PermanentDrawerLeft = ({ children }: React.PropsWithChildren<{}>) =
             <TextField
               id="new-item"
               autoComplete='off'
-              type='text'
+              type='title'
               size="medium"
-              value={state.board.title}
+              value={title}
               onChange={e => updateDesc(e.target.value)}
               placeholder={'Add Board Title'}
               InputProps={{ style: { fontSize: 20, textAlign: 'center', marginLeft: '200px', } }}
             />
           </MuiThemeProvider>
-          <Button variant="contained" 
+          <Button variant="contained"
             className={classes.button}
             onClick={e => dispatch({ type: "RESET", payload: {} })} >Reset</Button>
         </Toolbar>

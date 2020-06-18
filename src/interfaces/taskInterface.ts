@@ -1,6 +1,7 @@
 export interface TaskInterface {
   listId: string // Innique identifier for the list the task is assigned to
   taskId: string // Unique identifier for the task
+  taskIndex?: number
   title: string
   type?: 'Bug' | 'Feature' | 'Epic' | 'Story' | 'Task'
   typeLetter?: string

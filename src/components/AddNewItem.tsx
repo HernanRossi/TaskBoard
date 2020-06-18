@@ -13,7 +13,7 @@ interface AddNewItemProps {
 
 export const AddNewItem = (props: AddNewItemProps) => {
   const [showForm, setShowForm] = useState(false)
-  const { onAdd, toggleButtonText, dark, type } = props
+  const { onAdd, toggleButtonText, type } = props
 
   function closeShowForm() {
     setShowForm(false)

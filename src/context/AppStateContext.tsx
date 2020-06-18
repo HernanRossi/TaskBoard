@@ -2,33 +2,49 @@ import React, { createContext, useReducer, useContext, useEffect } from "react"
 import { nanoid } from "nanoid"
 import _ from 'lodash'
 import { findItemIndexById, moveItem } from "../utils"
-import { AppState } from '../models/interfaces/contextInterfaces'
+import { AppState } from '../interfaces/contextInterfaces'
 import { Action } from '../types/AppContextTypes'
-import { defaultBoard } from "../models/mock-data/defaultTasks"
-import { Task } from "../models/classes/TaskClass"
+import { defaultBoard } from "../models/mock-data/defaultBoard"
+import { Task } from "../models/TaskClass"
+import { Board } from "../models"
 
 const appData: AppState = {
+  cachedReset: _.cloneDeep(defaultBoard),
   board: _.cloneDeep(defaultBoard),
+  sessionId: '',
   draggedItem: undefined,
 }
 
 const appStateReducer = (state: AppState, action: Action): AppState => {
-  const {userId, boardId, title } = state.board
+  const { sessionId, boardId, title } = state.board
 
   switch (action.type) {
-      case "RESET": {
+    case "START_SESSION": {
+      if(state.sessionId) return {...state}
+      const { session } = action.payload
+      const {boards} = session
+      const sessionBoard = new Board(boards[0])
+      return {
+        sessionId,
+        board: _.cloneDeep(sessionBoard), draggedItem: undefined,
+        cachedReset: _.cloneDeep(sessionBoard)
+      }
+    }
+    case "RESET": {
+      const reset = _.cloneDeep(state.cachedReset)
       localStorage.removeItem("state")
       return {
-        board: _.cloneDeep(defaultBoard), draggedItem: undefined,
+        ...state,
+        board: reset, draggedItem: undefined,
       }
     }
     case "ADD_LIST": {
-      if (action.payload.length < 1) return { ...state, board: {lists: [...state.board.lists], userId, boardId, title } }
+      if (action.payload.length < 1) return { ...state, board: { lists: [...state.board.lists], sessionId, boardId, title } }
       return {
         ...state,
         board: {
-          userId, boardId, title,
-          lists: [...state.board.lists,  { listId: nanoid(), title: action.payload, tasks: [] } ]
+          sessionId, boardId, title,
+          lists: [...state.board.lists, { listId: nanoid(), title: action.payload, tasks: [] }]
         }
       }
     }
@@ -101,11 +117,10 @@ interface AppStateContextProps {
   dispatch: React.Dispatch<Action>
 }
 
-
 export const AppStateProvider = ({ children }: React.PropsWithChildren<{}>) => {
   const persistedState = localStorage.getItem("state")
   let localState = appData
-  if(persistedState) {
+  if (persistedState) {
     localState = JSON.parse(persistedState)
   }
 

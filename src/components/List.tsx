@@ -8,7 +8,7 @@ import { useItemDrag } from '../utils/useItemDrag'
 import { DragItem } from '../types/DragItem'
 import { isHidden } from '../utils/isHidden'
 import { StyledCard } from './StyledCard'
-import { ListInterface } from '../models/interfaces/listInterface'
+import { ListInterface } from '../interfaces/listInterface'
 import { IconButton, Menu, MenuItem } from '@material-ui/core'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
@@ -67,8 +67,6 @@ export const List = ({ list, id, index, isPreview }: ListProps) => {
             return
           }
         }
-
-
         dispatch({
           type: "MOVE_TASK",
           payload: { dragIndex, hoverIndex, sourceList, targetList }
@@ -78,15 +76,11 @@ export const List = ({ list, id, index, isPreview }: ListProps) => {
       }
     }
   })
-
   const { drag } = useItemDrag({ type: "LIST", list, id, index })
-
   drag(drop(ref))
 
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null)
-
   const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-
     if (!event?.currentTarget) return
     setAnchorEl(event.currentTarget)
   }
