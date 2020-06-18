@@ -138,7 +138,7 @@ export const StyledCard = React.memo(({ task, index, id, listId, isPreview }: Ca
             </IconButton>
           }
           title={task.title}
-          subheader={`Created: ${new Date(task.created || '').toLocaleDateString("en-US")}`}
+          subheader={`Created: ${task.created ? new Date(task.created).toLocaleDateString("en-US") : 'N/A'}`}
         />
         <CardContent>
           <Menu

@@ -127,7 +127,13 @@ export const LogoLoading = styled.div`
   height: 190px;
   -webkit-animation: ${logoAnimation} 4s cubic-bezier(.85,.12,.31,.98) infinite;
   animation: ${logoAnimation}  4s cubic-bezier(.85,.12,.31,.98) infinite;
-  display: flex;
   margin: auto;
+  margin-top: 125px;
+`
+export const LoadingContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   margin-top: 125px;
 `

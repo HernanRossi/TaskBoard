@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './styles/App.css'
 import { List, AddNewItem, CustomDragLayer, PermanentDrawerLeft } from './components'
-import { AppContainer, LogoLoading } from './styles/styles'
+import { AppContainer, LogoLoading, LoadingContainer } from './styles/styles'
 import { useAppState } from './context'
 import { nanoid } from 'nanoid'
 import { Session } from './interfaces/contextInterfaces'
@@ -33,10 +33,11 @@ function App() {
   const isLoading = () => {
     if (loading) {
       return (
-        <div style={{ margin: 'auto', marginTop: '125px' }}>
+        <LoadingContainer >
+          {/* <Typography >We are loading the data one second please :)</Typography> */}
+
           <LogoLoading />
-          <Typography style={{ margin: 'auto' }}>We are loading the data one second please :)</Typography>
-        </div>
+        </LoadingContainer>
       )
     }
     return (<AppContainer>

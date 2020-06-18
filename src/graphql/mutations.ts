@@ -20,6 +20,7 @@ mutation($sessionId: String!){
                     taskIndex
                     title
                     description
+                    created
                  }
             }
         }

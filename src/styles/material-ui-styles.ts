@@ -1,5 +1,4 @@
 import { makeStyles } from "@material-ui/core";
-import { ThemeContext } from "styled-components";
 
 const drawerWidth = 175
 
